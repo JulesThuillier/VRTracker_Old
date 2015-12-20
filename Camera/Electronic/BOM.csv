@@ -1,0 +1,7 @@
+"Qty";"Value";"Device";"Package";"Parts";"Description";"";
+"2";"";"LED_E";"LED_1206";"LED1, LED2";"LED";"";
+"2";"100";"R-US_M1206";"M1206";"R1, R2";"RESISTOR, American symbol";"";
+"1";"ARDUINOPROMINI";"ARDUINOPROMINI";"ARDUINOPROMINI";"ARDUINOPROMINI";"";"";
+"1";"CMUCAMCONN";"CMUCAMCONN";"DIP10";"CMUCAM";"";"";
+"1";"NRF24L01";"NRF24L01";"DIP8";"NRF24L01";"";"";
+"1";"SPX1117";"SPX1117";"SOT-223";"SPX1117";"";"";
