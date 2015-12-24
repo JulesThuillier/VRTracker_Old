@@ -32,12 +32,6 @@ radio = RF24(RPI_BPLUS_GPIO_J8_22, RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ)
 ##########################################
 
 pipes = [0xF0F0F0F0F1, 0xF0F0F0F0E2, 0xF0F0F0F0D3, 0xF0F0F0F0C4, 0xF0F0F0F0B5, 0xF0F0F0F0A6]
-min_payload_size = 4
-max_payload_size = 32
-payload_size_increments_by = 1
-next_payload_size = min_payload_size
-inp_role = 'none'
-send_payload = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ789012'
 millis = lambda: int(round(time.time() * 1000))
 
 print 'Starting VrTracker...'
@@ -58,60 +52,14 @@ radio.startListening();
 
 # forever loop
 while 1:
-    if inp_role == '1':   # ping out
-        # The payload will always be the same, what will change is how much of it we send.
-
-        # First, stop listening so we can talk.
-        radio.stopListening()
-
-        # Take the time, and send it.  This will block until complete
-        print 'Now sending length ', next_payload_size, ' ... ',
-        radio.write(send_payload[:next_payload_size])
-
-        # Now, continue listening
-        radio.startListening()
-
-        # Wait here until we get a response, or timeout
-        started_waiting_at = millis()
-        timeout = False
-        while (not radio.available()) and (not timeout):
-            if (millis() - started_waiting_at) > 500:
-                timeout = True
-
-        # Describe the results
-        if timeout:
-            print 'failed, response timed out.'
-        else:
-            # Grab the response, compare, and send to debugging spew
-            len = radio.getDynamicPayloadSize()
-            receive_payload = radio.read(len)
+   
+    # if there is data ready
+    pipeNumber = radio.available()
+    if pipeNumber:
+        while radio.available():
+            receive_payload = radio.read(3)
 
             # Spew it
-            print 'got response size=', len, ' value="', receive_payload, '"'
+            print 'Got payload, value="', receive_payload, '"'
 
-        # Update size for next time.
-        next_payload_size += payload_size_increments_by
-        if next_payload_size > max_payload_size:
-            next_payload_size = min_payload
-        # Pong back role.  Receive each packet, dump it out, and send it back
-
-        # if there is data ready
-        if radio.available():
-            while radio.available():
-                # Fetch the payload, and see if this was the last one.
-	            len = radio.getDynamicPayloadSize()
-	            receive_payload = radio.read(len)
-
-	            # Spew it
-	            print 'Got payload size=', len, ' value="', receive_payload, '"'
-
-            # First, stop listening so we can talk
-            radio.stopListening()
-
-            # Send the final one back.
-            radio.write(receive_payload)
-            print 'Sent response.'
-
-            # Now, resume listening so we catch the next packets.
-            radio.startListening()
-
+            # Calculate 3D position here
