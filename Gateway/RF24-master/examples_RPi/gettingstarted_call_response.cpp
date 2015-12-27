@@ -34,10 +34,10 @@ using namespace std;
 //RF24 radio(RPI_V2_GPIO_P1_22, BCM2835_SPI_CS0, BCM2835_SPI_SPEED_4MHZ);
 
 // NEW: Setup for RPi B+
-//RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ);
+RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ);
 
 // Setup for GPIO 15 CE and CE0 CSN with SPI Speed @ 8Mhz
-RF24 radio(RPI_V2_GPIO_P1_15, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ);
+//RF24 radio(RPI_V2_GPIO_P1_15, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ);
 
 /*** RPi Alternate ***/
 //Note: Specify SPI BUS 0 or 1 instead of CS pin number.
@@ -68,11 +68,14 @@ RF24 radio(RPI_V2_GPIO_P1_15, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ);
 // Assign a unique identifier for this node, 0 or 1. Arduino example uses radioNumber 0 by default.
 bool radioNumber = 1;
 
+uint8_t data[3];
 /********************************/
 
 
 // Radio pipe addresses for the 2 nodes to communicate.
-const uint8_t addresses[][6] = {"1Node","2Node"};
+//const uint8_t addresses[][6] = {"1Node","2Node"};
+//const uint8_t addresses[][6] = {0xF0F0F0F0F1, 0xF0F0F0F0E2, 0xF0F0F0F0D3, 0xF0F0F0F0C4, 0xF0F0F0F0B5, 0xF0F0F0F0A6};
+const uint64_t addresses[6] = {0xF0F0F0F0F1LL, 0xF0F0F0F0E2LL, 0xF0F0F0F0D3LL, 0xF0F0F0F0C4LL, 0xF0F0F0F0B5LL, 0xF0F0F0F0A6LL};              // Radio pipe addresses for the 2 nodes to communicate.
 
 bool role_ping_out = 1, role_pong_back = 0, role = 0;
 uint8_t counter = 1;                                                          // A single byte to keep track of the data being sent back and forth
@@ -85,6 +88,9 @@ int main(int argc, char** argv){
   radio.begin();
   radio.enableAckPayload();               // Allow optional ack payloads
   radio.enableDynamicPayloads();
+  radio.setPALevel(RF24_PA_MAX);
+  radio.setDataRate(RF24_1MBPS);
+  radio.setCRCLength(RF24_CRC_8);          // Use 8-bit CRC for performance
   radio.printDetails();                   // Dump the configuration of the rf unit for debugging
 
 
@@ -151,13 +157,15 @@ while (1){
 
   if ( role == role_pong_back ) {
     uint8_t pipeNo, gotByte;           		        // Declare variables for the pipe and the byte received
+//    uint8_t * data = new uint8_t[3];
+
     if( radio.available(&pipeNo)){               	// Read all available payloads      
-      radio.read( &gotByte, 1 );
+      radio.read(&data, 3);
 													// Since this is a call-response. Respond directly with an ack payload.
 	  gotByte += 1;  								// Ack payloads are much more efficient than switching to transmit mode to respond to a call
-	  radio.writeAckPayload(pipeNo,&gotByte, 1 );   // This can be commented out to send empty payloads.	  
-      printf("Loaded next response %d \n\r", gotByte);
-	  delay(900); //Delay after a response to minimize CPU usage on RPi
+//	  radio.writeAckPayload(pipeNo,&gotByte, 1 );   // This can be commented out to send empty payloads.	  
+      printf("Datas : %02x %02x %02x\n\r", data[0], data[1], data[2]);
+	  delay(2); //Delay after a response to minimize CPU usage on RPi
 				  //Expects a payload every second      
    }
  }
