@@ -39,13 +39,13 @@ using namespace std;
 //RF24 radio(RPI_V2_GPIO_P1_22, BCM2835_SPI_CS0, BCM2835_SPI_SPEED_4MHZ);
 
 // NEW: Setup for RPi B+
-//RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ);
+RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ);
 
 // Setup for GPIO 15 CE and CE0 CSN with SPI Speed @ 8Mhz
 //RF24 radio(RPI_V2_GPIO_P1_15, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ);
 
 // RPi generic:
-RF24 radio(22,0);
+//RF24 radio(22,0);
 
 /*** RPi Alternate ***/
 //Note: Specify SPI BUS 0 or 1 instead of CS pin number.
@@ -74,12 +74,12 @@ RF24 radio(22,0);
 
 /********** User Config *********/
 // Assign a unique identifier for this node, 0 or 1
-bool radioNumber = 1;
+bool radioNumber = 0;
 
 /********************************/
 
 // Radio pipe addresses for the 2 nodes to communicate.
-const uint8_t pipes[][6] = {"1Node","2Node"};
+const uint8_t pipes[][6] = {"Came1","Base1"};
 
 
 int main(int argc, char** argv){
@@ -93,7 +93,7 @@ int main(int argc, char** argv){
   radio.begin();
 
   // optionally, increase the delay between retries & # of retries
-  radio.setRetries(15,15);
+ // radio.setRetries(15,15);
   // Dump the configuration of the rf unit for debugging
   radio.printDetails();
 
