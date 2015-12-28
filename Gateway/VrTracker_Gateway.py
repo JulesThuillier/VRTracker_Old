@@ -16,17 +16,30 @@ from RF24 import *
 #############################################
 
 global clients
+clients = []
+global cameras_xy
+cameras_xy = np.zeros(shape=(6,2))
+
+server = WebsocketServer(9006, "192.168.1.101")
 
 def new_client(client, server):
     print 'New client has joined'
     global clients
-    clients = client
+    clients.append(client)
     print clients
 
 def message_from_client(client, server, message):
     print 'Message received from ', client, ' : ', message
+    if message == "calibrate":
+        print 'Start Calibration'
+    elif message == "ok":
+        print 'Start Calibration'
+    elif message == "end":
+        print 'End Calibration'
+    elif message == "exit":
+        print 'Stop server'
+	server.stop()
 
-server = WebsocketServer(9019, "192.168.1.101")
 server.set_fn_new_client(new_client)
 server.set_fn_message_received(message_from_client)
 
@@ -82,7 +95,8 @@ def websocket_send_thread():
     while True:
         if not XYZ_Queue.empty():
             worker = XYZ_Queue.get()
-            server.send_message(clients, worker)
+            val = " ".join(str(e) for e in worker)
+            server.send_message(clients[0], val)
             XYZ_Queue.task_done()
 
 def rf24_receive_thread():
@@ -90,9 +104,10 @@ def rf24_receive_thread():
         if not XY_Queue.full():
                 pipeNumber = radio.available_pipe()
                 if pipeNumber[0]:
-                    receive_payload = radio.read(3)
-                    XY_Queue.put( receive_payload)
-                    print 'pipe number = ', pipeNumber[0], ' - ', pipeNumber[1] 
+                    len = radio.getDynamicPayloadSize()
+                    receive_payload = radio.read(len)
+                    XY_Queue.put(receive_payload)
+                    print 'Camera ID = ',  pipeNumber[1]
         else :
             print 'XY Queue is full'
 
@@ -106,8 +121,18 @@ def calculate_XYZ_thread():
                 XY_Queue.task_done()
         if not XYZ_Queue.full():
                 if valuetosend != 0:
-                    print valuetosend
-                    XYZ_Queue.put(valuetosend)
+                 #   print valuetosend
+#                    print 'ord 0 : ', ord(valuetosend[0])
+#                    print 'ord 1 : ', ord(valuetosend[1])
+ #                   print 'ord 2 : ', ord(valuetosend[2])
+#                    print 'ord 3 : ', ord(valuetosend[3])
+                    y =((ord(valuetosend[1]) & 0x0F) << 8) | (ord(valuetosend[0]))
+                    x = (((ord(valuetosend[2]) << 4) & 0x0FF0) | (0x0F & (ord(valuetosend[1]) >> 4)) ) & 0x0FFF
+                #    x = ord(valuetosend[1])
+                    sig = ord(valuetosend[3])
+                    parsed_value = [sig, x, y]
+                    print parsed_value
+                    XYZ_Queue.put(parsed_value)
         else :
             print 'XYZ Queue is full'
 
