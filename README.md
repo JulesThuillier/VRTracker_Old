@@ -4,3 +4,5 @@ This system is **compatible with every kind of Virtual Reality headset**, like *
 
 ![GitHub Logo](http://julesthuillier.com/wp-content/uploads/2015/10/VrTracker-general.png)
 
+All the code is under GNU General Public License V3.0
+
