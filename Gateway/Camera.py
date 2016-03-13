@@ -1,6 +1,7 @@
 import numpy as np
 from parse import *
 from tracking import Point2D
+from utils.Observer import Observer, Observable
 
 class Camera():
 
@@ -34,12 +35,26 @@ class Camera():
     def addPoint(self, x, y, height, width):
         for point in self.points2D:
             if point.distance(x, y) < self.MAX_DISTANCE_BETWEEN_POINTS*self.MAX_DISTANCE_BETWEEN_POINTS and point.sizeDifference(height, width) < self.MAX_SIZE_DIFF_BETWEEN_POINTS*self.MAX_SIZE_DIFF_BETWEEN_POINTS :
-                point.add(x, y, height, width)
+                point.update(x, y, height, width)
                 return
-        # Point not found, add it to the list :
-        self.points2D.append(x, y, height, width)
+        # Point not found, add it to the list and notify creation :
+        print("CAMERA " + self.ip + " : NEW 2D Point")
+        self.points2D.append(Point2D(x, y, height, width))
+        self.new2DPointNotifier.notifyObservers()
 
 
+    class new2DPointNotifier(Observable):
+        def __init__(self, outer):
+            Observable.__init__(self)
+            self.outer = outer
+        def notifyObservers(self):
+                self.setChanged()
+                Observable.notifyObservers(self)
 
-
-
+    class point2DdeletedNotifier(Observable):
+        def __init__(self, outer):
+            Observable.__init__(self)
+            self.outer = outer
+        def notifyObservers(self):
+                self.setChanged()
+                Observable.notifyObservers(self)

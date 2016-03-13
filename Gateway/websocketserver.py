@@ -1,6 +1,8 @@
 from websocket_server import WebsocketServer
-from camera import Camera
+
+import Camera
 from tracking import User
+
 
 class websocketserver():
 
@@ -48,6 +50,10 @@ class websocketserver():
         else:
             if message == "camera":
                 self.cameras[str(client['address'])] = Camera.Camera(str(client['address']))
+                # Add Observers linking every user to every camera's update
+                for user in self.users:
+                    self.cameras[str(client['address'])].new2DPointNotifier.addObserver(user.position.newPoint2DObserver)
+                    self.cameras[str(client['address'])].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
 
             elif message == "tag":
                 del self.unknown[str(client['address'])]
@@ -56,3 +62,7 @@ class websocketserver():
             elif message == "user":
                 del self.unknown[str(client['address'])]
                 self.users[str(client['address'])] = User.User(str(client['address']))
+                # Add Observers linking every user to every camera's update
+                for camera in self.cameras:
+                    camera.new2DPointNotifier.addObserver(self.users[str(client['address'])].position.newPoint2DObserver)
+                    camera.point2DdeletedNotifier.addObserver(self.users[str(client['address'])].position.point2DDeletedObserver)

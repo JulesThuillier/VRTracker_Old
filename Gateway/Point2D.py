@@ -1,4 +1,5 @@
 from collections import deque
+from utils.Observer import Observer, Observable
 from math import sqrt
 
 # Buffer of a 2D point
@@ -14,10 +15,11 @@ class Point2D():
         buffer.append(point)
         #TODO Notify point created ==> To associate it to 3D point
 
-    def add(self, x, y, height, width):
+    def update(self, x, y, height, width):
         point = {'x': x, 'y': y, 'height': height, 'width': width};
         buffer.append(point)
         #TODO Notify 2D Point updated ==> Update 3D position
+        self.positionUpdateNotifier.notifyObservers()
 
     # Warning : does not pop
     def get(self):
@@ -40,3 +42,12 @@ class Point2D():
         h = abs(lastxy[2] - height)
         w = abs(lastxy[3] - width)
         return h*h + w*w
+
+
+    class positionUpdateNotifier(Observable):
+        def __init__(self, outer):
+            Observable.__init__(self)
+            self.outer = outer
+        def notifyObservers(self):
+                self.setChanged()
+                Observable.notifyObservers(self)

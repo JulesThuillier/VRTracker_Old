@@ -1,5 +1,4 @@
-from server import websocketserver
-
+import websocketserver
 
 myserver =  websocketserver.websocketserver('192.168.1.102')
 
