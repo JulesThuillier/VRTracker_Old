@@ -1,14 +1,15 @@
 from websocket_server import WebsocketServer
+from Camera import Camera
+from User import User
+from Calibration import Calibration
 
-import Camera
-from tracking import User
 
-
-class websocketserver():
+class websocketserver:
 
     cameras = {}
     tags = {}
     users = {}
+    calibration = {}
 
     port=8001
 
@@ -20,26 +21,33 @@ class websocketserver():
 
     # Called for every client disconnecting
     def client_left(self, client, server):
-        print("Hello left")
-        #print("Client(%d) disconnected" % client['id'])
+        print("Client(%d) disconnected" % client['id'])
+        #TODO : Remove from list
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
-        print("Client(%d) said: %s" % (client['id'], message))
+        #print("Client(%d) said: %s" % (client['id'], message))
         self.parseMessage(client, message)
 
     def __init__(self, host='127.0.0.1'):
-        server = WebsocketServer(self.port, host)
-        server.set_fn_new_client(self.new_client_connection)
-        server.set_fn_client_left(self.client_left)
-        server.set_fn_message_received(self.message_received)
-        server.run_forever()
+        self.server = WebsocketServer(self.port, host)
+        self.server.set_fn_new_client(self.new_client_connection)
+        self.server.set_fn_client_left(self.client_left)
+        self.server.set_fn_message_received(self.message_received)
+        self.server.run_forever()
 
 
     def parseMessage(self, client, message):
+        """
+        Check who is the message from to redirect it to User / Tag / Camera / Calibration
+        or create a new instance of User / Tag / Camera / Calibration
+        :param client:
+        :param message:
+        :return:
+        """
         if self.cameras.has_key(str(client['address'])):
-            print "Message from Camera"
-            self.cameras[str(client['address'])].parse(message)
+            #print "Message from Camera"
+            self.cameras[str(client['address'])].push(message)
 
         elif self.users.has_key(str(client['address'])):
             print "Message from User"
@@ -47,22 +55,32 @@ class websocketserver():
         elif self.tags.has_key(str(client['address'])):
             print "Message from Tag"
 
+        elif self.calibration.has_key(str(client['address'])):
+            self.calibration[str(client['address'])].push(message)
+            print "Message from Calibration"
+
+        # This message is coming from an unknown client
         else:
             if message == "camera":
-                self.cameras[str(client['address'])] = Camera.Camera(str(client['address']))
+                self.cameras[str(client['address'])] = Camera(client)
                 # Add Observers linking every user to every camera's update
-                for user in self.users:
-                    self.cameras[str(client['address'])].new2DPointNotifier.addObserver(user.position.newPoint2DObserver)
-                    self.cameras[str(client['address'])].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
+                for key in self.users:
+                    if isinstance(self.users[key], User):
+                        self.cameras[str(client['address'])].new2DPointNotifier.addObserver(self.users[key].position.newPoint2DObserver)
+                        self.cameras[str(client['address'])].point2DdeletedNotifier.addObserver(self.users[key].position.point2DDeletedObserver)
 
             elif message == "tag":
-                del self.unknown[str(client['address'])]
+                print "Hello TAG"
                 # TODO
 
             elif message == "user":
-                del self.unknown[str(client['address'])]
-                self.users[str(client['address'])] = User.User(str(client['address']))
+                user = User(client, self.server)
+                self.users[str(client['address'])] = user
                 # Add Observers linking every user to every camera's update
-                for camera in self.cameras:
-                    camera.new2DPointNotifier.addObserver(self.users[str(client['address'])].position.newPoint2DObserver)
-                    camera.point2DdeletedNotifier.addObserver(self.users[str(client['address'])].position.point2DDeletedObserver)
+                for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        self.cameras[key].new2DPointNotifier.addObserver(user.position.newPoint2DObserver)
+                        self.cameras[key].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
+
+            elif message == "calibration":
+                self.calibration = Calibration()

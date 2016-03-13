@@ -1,43 +1,18 @@
-from Camera import Camera
 from utils.Observer import Observer
+from Camera import Camera
 
-
-# Represent a 3D Position with observers on 2D point updates
-class Point3D:
+class Calibration:
 
     points2D = []
 
-    def __init__(self, user):
+    def __init__(self):
         print "Init Point 3D"
-        self.user = user
-        self.newPoint2DObserver = Point3D.NewPoint2DObserver(self)
-        self.point2DDeletedObserver = Point3D.Point2DDeletedObserver(self)
-        self.point2DUpdateObserver = Point3D.Point2DUpdateObserver(self)
+        self.newPoint2DObserver = Calibration.NewPoint2DObserver(self)
+        self.point2DDeletedObserver = Calibration.Point2DDeletedObserver(self)
+        self.point2DUpdateObserver = Calibration.Point2DUpdateObserver(self)
 
-    def update(self):
-        print ("TODO")
-
-    def add(self,point2D):
-        self.points2D.append(point2D)
-
-    def delete(self,point2D):
-        self.points2D.remove(point2D)
-
-    # Warning : does not pop
-    def get(self):
-        return buffer[-1]
-
-    def getAll(self):
-        return list(buffer)
-
-
-    # Check distance between last 3D point in buffer and the point in parameter (not squared)
-    def distance(self, x, y, z):
-        lastxy = buffer[-1]
-        distx = abs(lastxy[0] - x)
-        disty = abs(lastxy[1] - y)
-        distz = abs(lastxy[2] - z)
-        return distx*distx + disty*disty + distz*distz
+    def push(self, message):
+        print message
 
 
     class Point2DUpdateObserver(Observer):
@@ -45,8 +20,7 @@ class Point3D:
             self.outer = outer
         def update(self, observable, arg):
             print("Position update Observer in Point 3D")
-            #TODO Calculate 3D position
-            self.outer.user.sendPositionUpdate("3D update")
+            #TODO
 
 
     class NewPoint2DObserver(Observer):
