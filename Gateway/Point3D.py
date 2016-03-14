@@ -47,8 +47,9 @@ class Point3D:
         def update(self, observable, arg):
             print("Position update Observer in Point 3D")
             #TODO Calculate 3D position
-            new3Dposition = compute.calculate3DPosition(self.outer.points2D[0], self.outer.points2D[1])
-            self.outer.user.sendPositionUpdate("3D update : " +str(new3Dposition))
+            if len(self.outer.points2D) > 1:
+                new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
+                self.outer.user.sendPositionUpdate(str(new3Dposition))
 
 
     class NewPoint2DObserver(Observer):
@@ -58,7 +59,7 @@ class Point3D:
             print("New 2D Point Observer in Point 3D")
             if isinstance(observable.outer, Camera):
                 #TODO check if this point could be owned by this user, if yes add it to the list
-                self.outer.add(arg.points2D[-1])
+                self.outer.add(observable.outer.points2D[-1])
 
                 # Add Observer for position update on last 2D Point added from Camera
                 observable.outer.points2D[-1].positionUpdateNotifier.addObserver(self.outer.point2DUpdateObserver)

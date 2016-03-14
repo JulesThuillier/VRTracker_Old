@@ -8,11 +8,6 @@ from utils.Observer import Observable
 
 class Camera:
 
-    camera_matrix = np.float64([[247.9139798, 0., 155.30251177], [0., 248.19822494, 100.74688813], [0.,  0., 1.]])
-    distortion_coefficient = np.float64([-0.45977769,  0.29782977, -0.00162724,  0.00046035, -0.16351777])
-    projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
-    pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
-
     MAX_DISTANCE_BETWEEN_POINTS = 10
     MAX_SIZE_DIFF_BETWEEN_POINTS = 10
 
@@ -24,11 +19,15 @@ class Camera:
         self.points2D = []
         self.new2DPointNotifier = Camera.New2DPointNotifier(self)
         self.point2DdeletedNotifier= Camera.Point2DdeletedNotifier(self)
-        print
-        #TODO try to load projection matrix
 
-    def update(self, data):
-        print data
+        self.camera_matrix = np.float64([[247.9139798, 0., 155.30251177], [0., 248.19822494, 100.74688813], [0.,  0., 1.]])
+        self.distortion_coefficient = np.float64([-0.45977769,  0.29782977, -0.00162724,  0.00046035, -0.16351777])
+        self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
+        self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
+
+        self.loadCameraPreferences()
+
+
 
     # Parse data from websocket to a dictionnay containing {'x': x, 'y': y, 'height': height, 'width': width};
     def parsePointMessage(self, data):
@@ -73,11 +72,11 @@ class Camera:
         pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
 
     def exitCalibrationMode(self, world3DPoints):
-        #TODO calculate matrix for each camera
         print self.client['id']
         print self.pointsCalibration
         print world3DPoints
         self.projection_matrix = compute.calculateProjectionMatrix(self, world3DPoints)
+        self.saveCameraPreferences()
 
     def saveCalibrationPoint2D(self):
         xy = [self.points2D[-1].buffer[-1]['x'], self.points2D[-1].buffer[-1]['y']]
@@ -85,21 +84,19 @@ class Camera:
 
     def loadCameraPreferences(self):
         if os.path.isfile(self.macadress+'.npz'):
-            print "Camera preference loaded"
             file = np.load(self.macadress+'.npz')
             file.files
-            camera_matrix = np.float64([[247.9139798, 0., 155.30251177], [0., 248.19822494, 100.74688813], [0.,  0., 1.]])
-            distortion_coefficient = np.float64([-0.45977769,  0.29782977, -0.00162724,  0.00046035, -0.16351777])
-            projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
+            self.camera_matrix = file['cam']
+            self.distortion_coefficient = file['dist']
+            self.projection_matrix = file['proj']
+            print "Camera preference loaded"
+
 
     def saveCameraPreferences(self):
         if os.path.isfile(self.macadress+'.npz'):
-            print "Camera preference loaded"
-            file = np.load(self.macadress+'.npz')
-            file.files
-            camera_matrix = np.float64([[247.9139798, 0., 155.30251177], [0., 248.19822494, 100.74688813], [0.,  0., 1.]])
-            distortion_coefficient = np.float64([-0.45977769,  0.29782977, -0.00162724,  0.00046035, -0.16351777])
-            projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
+            os.remove(self.macadress+'.npz')
+        np.savez(self.macadress+'.npz', cam=self.camera_matrix, dist=self.distortion_coefficient, proj=self.projection_matrix)
+        print "Camera preference saved"
 
 
 

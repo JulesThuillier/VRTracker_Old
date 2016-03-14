@@ -8,7 +8,7 @@ class Point2D:
     bufferSize = 50
     buffer = deque(maxlen=bufferSize)
 
-
+    camera = ""
 
     MAX_FRAME_LOST_BEFORE_DELETE = 30
 

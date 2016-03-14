@@ -26,7 +26,7 @@ def calculate3DPosition(Point2D1, Point2D2):
     mypoint1 = np.array([triangulationOutput[0], triangulationOutput[1], triangulationOutput[2]])
     mypoint1 = mypoint1.reshape(-1, 3)
     mypoint1 = np.array([mypoint1])
-    P_24x4 = np.resize(camera1.projection_matrix[0], (4,4))
+    P_24x4 = np.resize(Point2D1.camera.projection_matrix[0], (4,4))
     P_24x4[3,0] = 0
     P_24x4[3,1] = 0
     P_24x4[3,2] = 0
