@@ -1,14 +1,15 @@
 from Camera import Camera
 from utils.Observer import Observer
+from Point2D import Point2D
+import compute
 
 
 # Represent a 3D Position with observers on 2D point updates
 class Point3D:
 
-    points2D = []
-
     def __init__(self, user):
         print "Init Point 3D"
+        self.points2D = []
         self.user = user
         self.newPoint2DObserver = Point3D.NewPoint2DObserver(self)
         self.point2DDeletedObserver = Point3D.Point2DDeletedObserver(self)
@@ -46,7 +47,8 @@ class Point3D:
         def update(self, observable, arg):
             print("Position update Observer in Point 3D")
             #TODO Calculate 3D position
-            self.outer.user.sendPositionUpdate("3D update")
+            new3Dposition = compute.calculate3DPosition(self.outer.points2D[0], self.outer.points2D[1])
+            self.outer.user.sendPositionUpdate("3D update : " +str(new3Dposition))
 
 
     class NewPoint2DObserver(Observer):
@@ -56,7 +58,7 @@ class Point3D:
             print("New 2D Point Observer in Point 3D")
             if isinstance(observable.outer, Camera):
                 #TODO check if this point could be owned by this user, if yes add it to the list
-                self.outer.add(arg)
+                self.outer.add(arg.points2D[-1])
 
                 # Add Observer for position update on last 2D Point added from Camera
                 observable.outer.points2D[-1].positionUpdateNotifier.addObserver(self.outer.point2DUpdateObserver)

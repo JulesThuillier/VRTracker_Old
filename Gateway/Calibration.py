@@ -1,48 +1,44 @@
 from utils.Observer import Observer
 from Camera import Camera
+import numpy as np
+from parse import *
 
 class Calibration:
+    """
+    This calibration is aimed at receiving calibration datas from
+    the websocket server, and control the calibration sequence.
+    It holds the 3D World Coordinates sent over websocket.
+    Calls cameras calibration function to save 2D calibration points
+    and calculate a new projection matrix on calibration exit
+    """
 
     points2D = []
+    world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
+    cameras = {}
 
-    def __init__(self):
-        print "Init Point 3D"
-        self.newPoint2DObserver = Calibration.NewPoint2DObserver(self)
-        self.point2DDeletedObserver = Calibration.Point2DDeletedObserver(self)
-        self.point2DUpdateObserver = Calibration.Point2DUpdateObserver(self)
+    def __init__(self, cameras):
+        print "Init Calibration"
+        self.cameras = cameras
+        self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
 
     def push(self, message):
-        print message
+        if message == "enter":
+            print "Start calibration"
+            self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
+            for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        self.cameras[key].enterCalibrationMode()
 
-
-    class Point2DUpdateObserver(Observer):
-        def __init__(self, outer):
-            self.outer = outer
-        def update(self, observable, arg):
-            print("Position update Observer in Point 3D")
-            #TODO
-
-
-    class NewPoint2DObserver(Observer):
-        def __init__(self, outer):
-            self.outer = outer
-        def update(self, observable, arg):
-            print("New 2D Point Observer in Point 3D")
-            if isinstance(observable.outer, Camera):
-                #TODO check if this point could be owned by this user, if yes add it to the list
-                self.outer.add(arg)
-
-                # Add Observer for position update on last 2D Point added from Camera
-                observable.outer.points2D[-1].positionUpdateNotifier.addObserver(self.outer.point2DUpdateObserver)
-
-    class Point2DDeletedObserver(Observer):
-        def __init__(self, outer):
-            self.outer = outer
-        def update(self, observable, arg):
-            print("2D Point deleted Observer in Point 3D")
-            if isinstance(arg, Camera):
-                print ("points2D length : " + str(len(self.outer.points2D)))
-                self.outer.delete(arg)
-                print ("points2D length after remove : " + str(len(self.outer.points2D)))
-                # Remove Observer for position update on 2D Point from Camera
-                observable.outer.points2D[-1].positionUpdateNotifier.deleteObserver(self.outer.point2DUpdateObserver)
+        elif message == "exit":
+            print "End calibration, calculates..."
+            for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        self.cameras[key].exitCalibrationMode(self.world3DPoints)
+        else:
+            extracted_data = parse("calib:{}-{}-{}", message)
+            if len(extracted_data.fixed) == 3:
+                xyz = [int(extracted_data.fixed[0]), int(extracted_data.fixed[1]), int(extracted_data.fixed[2])]
+                self.world3DPoints = np.append(self.world3DPoints, [xyz], axis=0)
+                for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        self.cameras[key].saveCalibrationPoint2D()

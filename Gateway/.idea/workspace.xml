@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="702ee776-78a7-4b10-888b-9d2b93f714f5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Calibration.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Calibration.py" afterPath="$PROJECT_DIR$/Calibration.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Camera.py" afterPath="$PROJECT_DIR$/Camera.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Point2D.py" afterPath="$PROJECT_DIR$/Point2D.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Point3D.py" afterPath="$PROJECT_DIR$/Point3D.py" />
@@ -33,8 +32,8 @@
       <file leaf-file-name="websocketserver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/websocketserver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-33.88889">
-              <caret line="61" column="55" selection-start-line="61" selection-start-column="55" selection-end-line="61" selection-end-column="55" />
+            <state vertical-scroll-proportion="-1.7407408">
+              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -42,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="51" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.610687">
+              <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -57,8 +56,8 @@
       <file leaf-file-name="User.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/User.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.7777777">
-              <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+            <state vertical-scroll-proportion="-3.8888888">
+              <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -67,8 +66,8 @@
       <file leaf-file-name="Calibration.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Calibration.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+            <state vertical-scroll-proportion="-8.259259">
+              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -76,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="compute.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="compute.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5700637">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.037037037">
+              <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -91,8 +90,8 @@
       <file leaf-file-name="Point2D.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Point2D.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.25926">
-              <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
+            <state vertical-scroll-proportion="-2.7777777">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="13" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -103,9 +102,11 @@
       <file leaf-file-name="Point3D.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Point3D.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.5555556">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="35" />
-              <folding />
+            <state vertical-scroll-proportion="-11.592592">
+              <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -144,14 +145,14 @@
         <option value="$PROJECT_DIR$/camera/__init__.py" />
         <option value="$PROJECT_DIR$/tracking/Point3D.py" />
         <option value="/Library/Python/2.7/site-packages/websocket_server/websocket_server.py" />
-        <option value="$PROJECT_DIR$/Point2D.py" />
-        <option value="$PROJECT_DIR$/Point3D.py" />
         <option value="$PROJECT_DIR$/Calibrationn.py" />
-        <option value="$PROJECT_DIR$/Camera.py" />
-        <option value="$PROJECT_DIR$/websocketserver.py" />
         <option value="$PROJECT_DIR$/Calibration.py" />
-        <option value="$PROJECT_DIR$/User.py" />
+        <option value="$PROJECT_DIR$/Point2D.py" />
         <option value="$PROJECT_DIR$/compute.py" />
+        <option value="$PROJECT_DIR$/Point3D.py" />
+        <option value="$PROJECT_DIR$/User.py" />
+        <option value="$PROJECT_DIR$/websocketserver.py" />
+        <option value="$PROJECT_DIR$/Camera.py" />
       </list>
     </option>
   </component>
@@ -482,7 +483,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.534407" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4465593" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -576,14 +577,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/camera/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -624,32 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/websocket_server/websocket_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35021096">
-          <caret line="69" column="20" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Point3D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5555556">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Point2D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.25926">
-          <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/Observer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9541985">
@@ -658,50 +625,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/websocketserver.py">
+    <entry file="file:///Library/Python/2.7/site-packages/websocket_server/websocket_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.88889">
-          <caret line="61" column="55" selection-start-line="61" selection-start-column="55" selection-end-line="61" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.51603055">
+          <caret line="86" column="12" selection-start-line="86" selection-start-column="10" selection-end-line="86" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Point2D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.7777777">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="13" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Calibration.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+        <state vertical-scroll-proportion="-8.259259">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/compute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.037037037">
+          <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Point3D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.592592">
+          <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camera/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/User.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7777777">
-          <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+        <state vertical-scroll-proportion="-3.8888888">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/websocketserver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.7407408">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="51" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.610687">
+          <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5700637">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

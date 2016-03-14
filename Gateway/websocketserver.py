@@ -26,7 +26,7 @@ class websocketserver:
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
-        #print("Client(%d) said: %s" % (client['id'], message))
+        print("Client(%d) said: %s" % (client['id'], message))
         self.parseMessage(client, message)
 
     def __init__(self, host='127.0.0.1'):
@@ -61,20 +61,20 @@ class websocketserver:
 
         # This message is coming from an unknown client
         else:
-            if message == "camera":
-                self.cameras[str(client['address'])] = Camera(client)
+            if message.split("-")[0] == "camera":
+                self.cameras[str(client['address'])] = Camera(client, message.split("-")[1])
                 # Add Observers linking every user to every camera's update
                 for key in self.users:
                     if isinstance(self.users[key], User):
                         self.cameras[str(client['address'])].new2DPointNotifier.addObserver(self.users[key].position.newPoint2DObserver)
                         self.cameras[str(client['address'])].point2DdeletedNotifier.addObserver(self.users[key].position.point2DDeletedObserver)
 
-            elif message == "tag":
+            elif message.split("-")[0] == "tag":
                 print "Hello TAG"
                 # TODO
 
-            elif message == "user":
-                user = User(client, self.server)
+            elif message.split("-")[0] == "user":
+                user = User(client, self.server, message.split("-")[1])
                 self.users[str(client['address'])] = user
                 # Add Observers linking every user to every camera's update
                 for key in self.cameras:
@@ -83,4 +83,4 @@ class websocketserver:
                         self.cameras[key].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
 
             elif message == "calibration":
-                self.calibration = Calibration()
+                self.calibration[str(client['address'])] = Calibration(self.cameras)

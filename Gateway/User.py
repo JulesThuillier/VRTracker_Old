@@ -5,7 +5,8 @@ class User:
     """
     This class represents a User, with its position, tag
     """
-    def __init__(self, client, server):
+    def __init__(self, client, server, mac):
+        self.macadress = mac
         self.client = client
         self.server = server
         self.position = Point3D.Point3D(self)
