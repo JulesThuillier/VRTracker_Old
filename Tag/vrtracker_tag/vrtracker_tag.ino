@@ -16,6 +16,32 @@ const int led_Ir_pin = D3;
 const int battery_Reading = D3;
 
 String macadress = "";
+IPAddress ip;
+String strIP;
+
+// Turn the IR light OFF
+void light_off(){
+  digitalWrite(led_Ir_pin, LOW); 
+}
+
+// Turn the IR light OFF wait for "timeMS" and turn it back ON (ping)
+void light_offon(uint16_t timeMS){
+  digitalWrite(led_Ir_pin, LOW);
+  delay(timeMS);
+  digitalWrite(led_Ir_pin, HIGH); 
+}
+
+// Turn the IR light ON
+void light_on(){
+  digitalWrite(led_Ir_pin, HIGH); 
+}
+
+// Set RGB Led color
+void rgb(uint8_t r, uint8_t g, uint8_t b){
+  analogWrite(led_Red_pin, r);
+  analogWrite(led_Green_pin, g);
+  analogWrite(led_Blue_pin, b);
+}
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 
@@ -30,10 +56,45 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
             }
             break;
         case WStype_TEXT:
+          {
             Serial.printf("[WSc] get text: %s\n", payload);
+            String command = (char*)payload;
+            Serial.println("Command Received : " + command);
             
-
-            break;
+            if(command == "on"){
+              light_on();
+            }
+            else if(command == "off"){
+              light_off();
+            }
+            else if(command.startsWith("offon:")){
+              String strValue=command.substring(6);
+              int value = strValue.toInt();
+              Serial.println(value);
+              light_offon(value);
+            }
+            else if(command.startsWith("rgb:")){
+              String strValue= command.substring(6);
+              Serial.println(strValue);
+              int index = strValue.indexOf('-');
+              String strR = strValue.substring(0, index+1);
+              Serial.println(strR);
+              strValue = strValue.substring(index+1);
+              index = strValue.indexOf('-');
+              String strG = strValue.substring(0, index+1);
+              Serial.println(strR);
+              strValue = strValue.substring(index+1);
+              index = strValue.indexOf('-');
+              String strB = strValue.substring(0, index+1);
+              Serial.println(strR);
+              int r = strR.toInt();
+              int g = strG.toInt();
+              int b = strB.toInt();
+              rgb(r,g,b);
+            }
+          }
+          break;
+            
         case WStype_BIN:
             Serial.printf("[WSc] get binary lenght: %u\n", lenght);
             hexdump(payload, lenght);
@@ -69,6 +130,13 @@ void setup() {
     wifiManager.autoConnect("VR Tracker TAG", "vrtracker");
     Serial.println("Wifi connection established");
 
+    char* buffer;
+    ip = WiFi.localIP();
+    sprintf(buffer,"%d:%d:%d:%d", ip[0],ip[1],ip[2],ip[3]);
+    strIP = String(buffer);
+    Serial.println("IP : " + strIP);
+    
+
     byte mac[6];
     WiFi.macAddress(mac);
     char macadd[7];
@@ -82,26 +150,11 @@ void setup() {
     ESPhttpUpdate.update("217.160.118.35", 80, "/vrtracker/arduino/tag.bin");
 
     // Start websocket client
-    webSocket.begin("192.168.1.102", 8001);
+    webSocket.begin(strIP, 8001);
     webSocket.onEvent(webSocketEvent);  
 }
 
 void loop() {
   webSocket.loop();
-}
-
-void light_off(){
-}
-
-void light_offon(uint16_t delay){
-
-}
-
-void light_on(){
-}
-
-void rgb(uint8_t r, uint8_t g, uint8_t b){
-
-  
 }
 

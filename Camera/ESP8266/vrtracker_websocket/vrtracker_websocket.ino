@@ -23,6 +23,8 @@ char buf[10];
 unsigned long timedelay =0;
 
 String macadress = "";
+IPAddress ip;
+String strIP;
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 
@@ -74,6 +76,12 @@ void setup() {
     wifiManager.autoConnect("VR Tracker CAMERA", "vrtracker");
     Serial.println("Wifi connection established");
 
+    char* buffer;
+    ip = WiFi.localIP();
+    sprintf(buffer,"%d:%d:%d:%d", ip[0],ip[1],ip[2],ip[3]);
+    strIP = String(buffer);
+    Serial.println("IP : " + strIP);
+
     // Check for software update
     ESPhttpUpdate.update("217.160.118.35", 80, "/vrtracker/arduino/camera.bin");
 
@@ -86,7 +94,7 @@ void setup() {
     macadress = String(macadd[0],HEX) + String(macadd[1],HEX) + String(macadd[2],HEX) + String(macadd[3],HEX) + String(macadd[4],HEX) + String(macadd[5],HEX);
     
     // Start websocket client
-    webSocket.begin("192.168.1.102", 8001);
+    webSocket.begin(strIP, 8001);
     webSocket.onEvent(webSocketEvent);  
 }
 
