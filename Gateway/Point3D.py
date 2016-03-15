@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from Camera import Camera
 from utils.Observer import Observer
 from Point2D import Point2D

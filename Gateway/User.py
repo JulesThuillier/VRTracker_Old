@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 import Point3D
-
 
 class User:
     """

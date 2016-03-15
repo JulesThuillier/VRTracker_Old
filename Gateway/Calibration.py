@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from utils.Observer import Observer
 from Camera import Camera
 import numpy as np

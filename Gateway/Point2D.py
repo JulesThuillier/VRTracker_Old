@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from collections import deque
 from utils.Observer import Observer, Observable
 from math import sqrt

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from websocket_server import WebsocketServer
 from Camera import Camera
 from User import User
