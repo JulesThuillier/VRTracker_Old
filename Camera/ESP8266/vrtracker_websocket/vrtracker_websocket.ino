@@ -25,6 +25,7 @@ unsigned long timedelay =0;
 String macadress = "";
 IPAddress ip;
 String strIP;
+bool wifiConnectFailed = false;
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 
@@ -54,6 +55,30 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
     }
 }
 
+void WiFiEvent(WiFiEvent_t event) {
+    Serial.printf("[WiFi-event] event: %d\n", event);
+
+    switch(event) {
+        case WIFI_EVENT_STAMODE_GOT_IP:
+            Serial.println("WiFi connected");
+            Serial.println("IP address: ");
+            Serial.println(WiFi.localIP());
+            break;
+        case WIFI_EVENT_STAMODE_CONNECTED:
+            Serial.println("WiFi connected");
+            Serial.println("IP address: ");
+            Serial.println(WiFi.localIP());
+            break;
+
+        default :
+            Serial.println("WiFi connection timeout");
+            WiFiManager wifiManager;
+            wifiConnectFailed = true; 
+            wifiManager.autoConnect("VR Tracker CAMERA", "vrtracker");
+            break;
+    }
+}
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -62,28 +87,30 @@ void setup() {
 
     // Initialize camera
     pixy.init();
+
+   /* WiFi.onEvent(WiFiEvent);
+    WiFi.begin("VR Tracker Gateway", "vrtracker");
     
-    //WiFiManager
-    //Local intialization. Once its business is done, there is no need to keep it around
+    while (WiFi.status() != WL_CONNECTED && wifiConnectFailed==false) {
+      delay(500);
+      Serial.print(".");
+    }*/
+
     WiFiManager wifiManager;
-    //reset saved settings
- //   wifiManager.resetSettings();
-    
-    //fetches ssid and pass from eeprom and tries to connect
-    //if it does not connect it starts an access point with the specified name
-    //here  "AutoConnectAP"
-    //and goes into a blocking loop awaiting configuration
+          //  wifiConnectFailed = true; 
+          wifiManager.resetSettings();
     wifiManager.autoConnect("VR Tracker CAMERA", "vrtracker");
     Serial.println("Wifi connection established");
 
-    char* buffer;
+    /*char* buffer;
     ip = WiFi.localIP();
-    sprintf(buffer,"%d:%d:%d:%d", ip[0],ip[1],ip[2],ip[3]);
-    strIP = String(buffer);
+    sprintf(buffer,"%d:%d:%d:%d", ip[0],ip[1],ip[2],ip[3]);*/
+    
+    strIP = WiFi.gatewayIP().toString();
     Serial.println("IP : " + strIP);
 
     // Check for software update
-    ESPhttpUpdate.update("217.160.118.35", 80, "/vrtracker/arduino/camera.bin");
+    ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/camera.bin");
 
     byte mac[6];
     WiFi.macAddress(mac);

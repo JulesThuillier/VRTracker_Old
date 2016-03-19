@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+	   <script src="lib/jquery.min.js" type="text/javascript"></script>
+      <script type="text/javascript">
+        
+            function connect(){
+                var socket;
+                var ip=document.getElementById("iptext").value;
+                var host = "ws://"+ip+":8001";
+
+                try{
+                    var socket = new WebSocket(host);
+
+                    message('<p class="event">Socket Status: '+socket.readyState);
+
+                    socket.onopen = function(){
+                        message('<p class="event">Socket Status: '+socket.readyState+' (open)');
+
+                        socket.send("calibration");
+                        socket.send("enter");       
+                    }
+
+                    socket.onmessage = function(msg){
+                        message('<p class="message">Received: '+msg.data);
+                    }
+
+                    socket.onclose = function(){
+                        message('<p class="event">Socket Status: '+socket.readyState+' (Closed)');
+                    }			
+
+                } catch(exception){
+                 message('<p>Error'+exception);
+                }
+
+                function send3DPoint(){
+                    document.getElementById("nanWarning").innerHTML = "";
+                    
+                    var x = $('#xvalue').val();
+                    var y = $('#yvalue').val();
+                    var z = $('#zvalue').val();
+                    
+                    if(isNaN(x) || isNaN(y) || isNaN(z)){
+                        document.getElementById("nanWarning").innerHTML = "Enter numbers only !";
+                        return;
+                    }
+                    
+                    $("#xvalue").val = ""; 
+                    $("#yvalue").val = "";  
+                    $("#zvalue").val = "";  
+
+                    value = "calib:" + x + "-" + y + "-" + z;
+                    
+                    try{
+                      socket.send(value);
+                      message('<p class="event">Sent: '+text)
+
+                    } catch(exception){
+                     message('<p class="warning">');
+                    }
+                }
+
+                function message(msg){
+                    document.getElementById("log").innerHTML += msg+'</p>';     
+                }
+
+
+                $('#add').click(function(){
+                 send3DPoint();
+                });
+
+                $('#end').click(function(){
+                 socket.close();
+                });
+
+            }//End connect
+
+
+
+      </script>
+		
+   </head>
+   <body>
+       <center><img src="images/logo_normal.jpg" alt="VR Tracker Logo" width="30%"></center>
+       <div id="mainDiv" style="margin-left:10%; margin-right:10%;">
+           <center><h1>Calibration</h1></center>
+        <div id="left" style="float:left; width:45%; margin:5%;">
+               <h2>Connect to the Gateway</h2>
+            <p>Please make sure your are connected to the Gateway Wifi, or at least on the network.</p>
+               <center> 
+                   Gateway IP :  
+                   <input id="iptext" type="text" name="gatewayip" value="192.168.10.1">
+                      
+                   <input type="button" value="Connect" onclick="connect()">
+                   <br><br>
+               </center>
+
+               <h2>Tag 3D world coordinates</h2>
+               <p>Move the Tag around in your room while making sure it is detected by the cameras and enter its world 3D coordinates below.
+               You need at least 4 calibration points per camera.</p>
+               <br>
+               <center>
+                    X : <input id="xvalue" type="text" name="gatewayip">
+                    <br><br>
+                    Y : <input id="yvalue"  type="text" name="gatewayip">
+                    <br><br>
+                    Z : <input id="zvalue"  type="text" name="gatewayip">
+                    <br>
+                   <p id="nanWarning" style="color:red"></p>
+                    <input id="add" type="button" value="Add new calibration point">
+               </center>
+               <br><br>
+
+               <h2>Finish calibration</h2>
+               <center><input id="end" type="button" value="End"></center>
+        </div>
+        <div id="right" style="float:left; width:30%; height:500px; padding:10px; margin:4%;border-style: groove;">
+            <h2>Message Log</h2>
+            <p id="log"></p>
+        </div>
+      </div>
+   </body>
+</html>

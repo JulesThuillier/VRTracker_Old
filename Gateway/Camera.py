@@ -76,12 +76,15 @@ class Camera:
         print self.client['id']
         print self.pointsCalibration
         print world3DPoints
-        self.projection_matrix = compute.calculateProjectionMatrix(self, world3DPoints)
+        self.projection_matrix, position = compute.calculateProjectionMatrix(self, world3DPoints)
         self.saveCameraPreferences()
+        return position
+
 
     def saveCalibrationPoint2D(self):
         xy = [self.points2D[-1].buffer[-1]['x'], self.points2D[-1].buffer[-1]['y']]
         self.pointsCalibration = np.append(self.pointsCalibration, [xy], axis=0)
+        return xy
 
     def loadCameraPreferences(self):
         if os.path.isfile(self.macadress+'.npz'):

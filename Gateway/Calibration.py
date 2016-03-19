@@ -17,10 +17,12 @@ class Calibration:
     world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
     cameras = {}
 
-    def __init__(self, cameras):
+    def __init__(self, cameras, server, client):
         print "Init Calibration"
         self.cameras = cameras
         self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
+        self.server = server
+        self.client = client
 
     def push(self, message):
         if message == "enter":
@@ -29,17 +31,23 @@ class Calibration:
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         self.cameras[key].enterCalibrationMode()
+                        self.server.send_message(self.client, "Camerea detected : " + self.cameras[key].mac)
+            self.server.send_message(self.client, "Calibration Started")
 
         elif message == "exit":
             print "End calibration, calculates..."
+            self.server.send_message(self.client, "Calibration Finished, calculating matrix...")
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
-                        self.cameras[key].exitCalibrationMode(self.world3DPoints)
+                        camPosition = self.cameras[key].exitCalibrationMode(self.world3DPoints)
+                        return self.server.send_message(self.client, str(camPosition))
         else:
             extracted_data = parse("calib:{}-{}-{}", message)
             if len(extracted_data.fixed) == 3:
+                self.server.send_message(self.client, "New calibration point received")
                 xyz = [int(extracted_data.fixed[0]), int(extracted_data.fixed[1]), int(extracted_data.fixed[2])]
                 self.world3DPoints = np.append(self.world3DPoints, [xyz], axis=0)
                 for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
-                        self.cameras[key].saveCalibrationPoint2D()
+                        xyposition = self.cameras[key].saveCalibrationPoint2D()
+                        self.server.send_message(self.client, "Camera " + str(key) + " 2D position : " + str(xyposition))

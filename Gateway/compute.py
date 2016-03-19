@@ -52,4 +52,4 @@ def calculateProjectionMatrix(camera, points3D):
 	camMatrix = np.append(cv2.Rodrigues(rvec)[0], tvec, 1)
 	projectionMatrix = np.dot(camera.camera_matrix, camMatrix)
 
-	return projectionMatrix
+	return projectionMatrix, cameraPosition

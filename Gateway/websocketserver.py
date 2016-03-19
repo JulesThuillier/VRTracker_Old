@@ -17,7 +17,7 @@ class websocketserver:
     # Called for every client connecting (after handshake)
     def new_client_connection(self, client, server):
         print("New client connected and was given id %d" %  client['id'] +" and  address " + str(client['address']))
-        server.send_message_to_all("Hey all, a new client has joined us")
+        server.send_message(client, "Client connected succesfully")
 
 
     # Called for every client disconnecting
@@ -84,4 +84,4 @@ class websocketserver:
                         self.cameras[key].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
 
             elif message == "calibration":
-                self.calibration[str(client['address'])] = Calibration(self.cameras)
+                self.calibration[str(client['address'])] = Calibration(self.cameras, self.server, client)

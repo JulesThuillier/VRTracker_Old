@@ -14,7 +14,8 @@ class User:
     def sendPositionUpdate(self, position):
         """
         Send updated 3D position to the User over WebSocket
-        :param position:
+        :param position: Array containing X,Y,Z
         :return:
         """
-        self.server.send_message(self.client, position)
+        strPosition = ":".join(position)
+        self.server.send_message(self.client, strPosition)
