@@ -50,7 +50,7 @@ class Point3D:
             #TODO Calculate 3D position
             if len(self.outer.points2D) > 1:
                 new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
-                self.outer.user.sendPositionUpdate(str(new3Dposition))
+                self.outer.user.sendPositionUpdate(new3Dposition[0])
 
 
     class NewPoint2DObserver(Observer):
