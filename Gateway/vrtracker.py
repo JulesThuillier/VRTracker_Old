@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 import websocketserver
 
-myserver =  websocketserver.websocketserver('192.168.1.104')
+myserver =  websocketserver.websocketserver('192.168.10.1')
 
