@@ -12,7 +12,6 @@ class Camera:
     MAX_DISTANCE_BETWEEN_POINTS = 10
     MAX_SIZE_DIFF_BETWEEN_POINTS = 10
 
-    points2D = []
 
     def __init__(self, client, mac):
         self.client = client
@@ -69,8 +68,8 @@ class Camera:
 
 
     def enterCalibrationMode(self):
-        projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
-        pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
+        self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
+        self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
 
     def exitCalibrationMode(self, world3DPoints):
         print self.client['id']

@@ -70,7 +70,8 @@
                 });
 
                 $('#end').click(function(){
-                 socket.close();
+                    socket.send("exit");  
+                //socket.close();
                 });
 
             }//End connect

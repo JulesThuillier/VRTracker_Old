@@ -31,7 +31,7 @@ class Calibration:
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         self.cameras[key].enterCalibrationMode()
-                        self.server.send_message(self.client, "Camerea detected : " + self.cameras[key].mac)
+                        self.server.send_message(self.client, "Camerea detected : " + self.cameras[key].macadress)
             self.server.send_message(self.client, "Calibration Started")
 
         elif message == "exit":
@@ -40,7 +40,7 @@ class Calibration:
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         camPosition = self.cameras[key].exitCalibrationMode(self.world3DPoints)
-                        return self.server.send_message(self.client, str(camPosition))
+                        self.server.send_message(self.client, str(camPosition))
         else:
             extracted_data = parse("calib:{}-{}-{}", message)
             if len(extracted_data.fixed) == 3:

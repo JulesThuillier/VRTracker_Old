@@ -55,30 +55,6 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
     }
 }
 
-void WiFiEvent(WiFiEvent_t event) {
-    Serial.printf("[WiFi-event] event: %d\n", event);
-
-    switch(event) {
-        case WIFI_EVENT_STAMODE_GOT_IP:
-            Serial.println("WiFi connected");
-            Serial.println("IP address: ");
-            Serial.println(WiFi.localIP());
-            break;
-        case WIFI_EVENT_STAMODE_CONNECTED:
-            Serial.println("WiFi connected");
-            Serial.println("IP address: ");
-            Serial.println(WiFi.localIP());
-            break;
-
-        default :
-            Serial.println("WiFi connection timeout");
-            WiFiManager wifiManager;
-            wifiConnectFailed = true; 
-            wifiManager.autoConnect("VR Tracker CAMERA", "vrtracker");
-            break;
-    }
-}
-
 
 void setup() {
   // put your setup code here, to run once:
@@ -96,9 +72,18 @@ void setup() {
       Serial.print(".");
     }*/
 
+     byte mac[6];
+    WiFi.macAddress(mac);
+    char macadd[7];
+    for(int i=0; i<6; i++){
+        macadd[i] = (char)mac[i];
+    }
+    macadress = String(macadd[0],HEX) + String(macadd[1],HEX) + String(macadd[2],HEX) + String(macadd[3],HEX) + String(macadd[4],HEX) + String(macadd[5],HEX);
+    
+
     WiFiManager wifiManager;
           //  wifiConnectFailed = true; 
-          wifiManager.resetSettings();
+         // wifiManager.resetSettings();
     wifiManager.autoConnect("VR Tracker CAMERA", "vrtracker");
     Serial.println("Wifi connection established");
 
@@ -107,19 +92,13 @@ void setup() {
     sprintf(buffer,"%d:%d:%d:%d", ip[0],ip[1],ip[2],ip[3]);*/
     
     strIP = WiFi.gatewayIP().toString();
-    Serial.println("IP : " + strIP);
+    Serial.println("My IP : " + WiFi.localIP().toString())
+    Serial.println("Gateway IP : " + strIP);
 
     // Check for software update
     ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/camera.bin");
 
-    byte mac[6];
-    WiFi.macAddress(mac);
-    char macadd[7];
-    for(int i=0; i<6; i++){
-        macadd[i] = (char)mac[i];
-    }
-    macadress = String(macadd[0],HEX) + String(macadd[1],HEX) + String(macadd[2],HEX) + String(macadd[3],HEX) + String(macadd[4],HEX) + String(macadd[5],HEX);
-    
+   
     // Start websocket client
     webSocket.begin(strIP, 8001);
     webSocket.onEvent(webSocketEvent);  
