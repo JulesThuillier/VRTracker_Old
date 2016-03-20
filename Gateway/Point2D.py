@@ -2,6 +2,7 @@
 from collections import deque
 from utils.Observer import Observer, Observable
 from math import sqrt
+from datetime import datetime
 
 # Buffer of a 2D point
 class Point2D:
@@ -17,6 +18,8 @@ class Point2D:
     timeLastUpdated = 0
 
     def __init__(self, x, y, height, width, camera):
+        self.MAX_DELAY_MS = 500
+        self.lastUpdateTime = datetime.datetime.now()
         self.camera = camera
         self.bufferSize = 50
         self.buffer = deque(maxlen=self.bufferSize)
@@ -30,6 +33,7 @@ class Point2D:
         self.lastUpdateCounter = 0
         point = {'x': int(x), 'y': int(y), 'height': int(height), 'width': int(width)};
         self.buffer.append(point)
+        self.lastUpdateTime = datetime.datetime.now()
         #TODO Notify 2D Point updated ==> Update 3D position
         self.positionUpdateNotifier.notifyObservers()
 
@@ -59,7 +63,12 @@ class Point2D:
         self.lastUpdateCounter += 1
 
     def isLost(self):
-        return self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter
+        lost = False
+        if (self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter):
+            lost = True
+        elif (datetime.datetime.now() - self.lastUpdateTime > self.MAX_DELAY_MS):
+            lost = True
+        return lost
 
 
     class PositionUpdateNotifier(Observable):

@@ -70,16 +70,17 @@ class Point3D:
                     if point.camera == temp2D.camera:
                         print "2D Point discard : same camera"
                         return
-		print "Hello1"
-		if len(self.outer.points2D) > 1:
+
+                print "Hello1"
+                if len(self.outer.points2D) > 1:
                     print "Hello2"
-		    # 2: Calculate 3D Point position with new 2D point and check position difference (yes difference too high, discard)
+                    # 2: Calculate 3D Point position with new 2D point and check position difference (yes difference too high, discard)
                     for point in self.outer.points2D:
-                    	print "Hello3"
-			temp3D = compute.calculate3DPosition(point, temp2D)
-			distance = self.outer.distance(temp3D[0,0], temp3D[1,0], temp3D[2,0])
-			print distance
-                    	if(distance > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
+                        print "Hello3"
+                        temp3D = compute.calculate3DPosition(point, temp2D)
+                        distance = self.outer.distance(temp3D[0,0], temp3D[1,0], temp3D[2,0])
+                        print distance
+                        if(distance > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
                             print "2D Point discard : too far"
                             return
 
