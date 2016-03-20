@@ -21,7 +21,8 @@ def calculate3DPosition(Point2D1, Point2D2):
 
     xy1 = [Point2D1.get()['x'], Point2D1.get()['y']]
     xy2 = [Point2D2.get()['x'], Point2D2.get()['y']]
-
+    print str(xy1) + " - " + str(Point2D1)
+    print str(xy2) + " - " + str(Point2D2)
     triangulationOutput = cv2.triangulatePoints(Point2D1.camera.projection_matrix,Point2D2.camera.projection_matrix, np.float32(xy1), np.float32(xy2))
 
     mypoint1 = np.array([triangulationOutput[0], triangulationOutput[1], triangulationOutput[2]])
@@ -35,7 +36,7 @@ def calculate3DPosition(Point2D1, Point2D2):
 
     projected = cv2.perspectiveTransform(mypoint1, P_24x4)
     output = triangulationOutput[:-1]/triangulationOutput[-1]
-
+    print output
     #TODO calculate point again with second proj mat, and calculate middle
     return output
 

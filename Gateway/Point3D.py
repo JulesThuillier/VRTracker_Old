@@ -74,7 +74,7 @@ class Point3D:
                 # 2: Calculate 3D Point position with new 2D point and check position difference (yes difference too high, discard)
                 for point in self.outer.points2D:
                     temp3D = compute.calculate3DPosition(point, temp2D)
-                    if(self.outer.distance(temp3D[0,1], temp3D[1,0], temp3D[2,0]) > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
+                    if(self.outer.distance(temp3D[0,0], temp3D[1,0], temp3D[2,0]) > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
                         print "2D Point discard : too far"
                         return
 
