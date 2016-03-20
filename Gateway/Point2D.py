@@ -11,7 +11,7 @@ class Point2D:
 
     camera = ""
 
-    MAX_FRAME_LOST_BEFORE_DELETE = 30
+    MAX_FRAME_LOST_BEFORE_DELETE = 15
 
     lastUpdateCounter = 0 # This counter is incremented every time his Camera receives a frame, either this point is not in the frame
     timeLastUpdated = 0
