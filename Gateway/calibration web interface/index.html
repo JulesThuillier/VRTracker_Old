@@ -61,7 +61,7 @@
                 }
 
                 function message(msg){
-                    document.getElementById("log").innerHTML += msg+'</p>';     
+                    document.getElementById("log").innerHTML = msg+'</p>' + document.getElementById("log").innerHTML;     
                 }
 
 
