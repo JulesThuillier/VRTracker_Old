@@ -38,9 +38,9 @@ class Point3D:
 
     # Check distance between last 3D point in buffer and the point in parameter (not squared)
     def distance(self, x, y, z):
-        distx = abs(self.lastXYZ[0,0] - x)
-        disty = abs(self.lastXYZ[1,0] - y)
-        distz = abs(self.lastXYZ[2,0] - z)
+        distx = abs(self.lastXYZ[0] - x)
+        disty = abs(self.lastXYZ[1] - y)
+        distz = abs(self.lastXYZ[2] - z)
         return distx*distx + disty*disty + distz*distz
 
 
@@ -53,7 +53,7 @@ class Point3D:
             if len(self.outer.points2D) > 1:
                 new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
                 self.outer.user.sendPositionUpdate(new3Dposition)
-                self.lastXYZ = new3Dposition
+                self.lastXYZ = [new3Dposition[0,0], new3Dposition[1,0], new3Dposition[2,0]]
 
 
     class NewPoint2DObserver(Observer):
