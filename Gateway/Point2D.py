@@ -20,6 +20,7 @@ class Point2D:
     def __init__(self, x, y, height, width, camera):
         self.MAX_DELAY_MS = 500
         self.lastUpdateTime = datetime.now()
+        self.pointLost = False
         self.camera = camera
         self.bufferSize = 50
         self.buffer = deque(maxlen=self.bufferSize)
@@ -31,9 +32,9 @@ class Point2D:
 
     def update(self, x, y, height, width):
         self.lastUpdateCounter = 0
+        self.lastUpdateTime = datetime.now()
         point = {'x': int(x), 'y': int(y), 'height': int(height), 'width': int(width)};
         self.buffer.append(point)
-        self.lastUpdateTime = datetime.now()
         #TODO Notify 2D Point updated ==> Update 3D position
         self.positionUpdateNotifier.notifyObservers()
 
@@ -63,12 +64,14 @@ class Point2D:
         self.lastUpdateCounter += 1
 
     def isLost(self):
-        lost = False
+        timeSinceLastUpdate = datetime.now() - self.lastUpdateTime
+        print timeSinceLastUpdate.microseconds
         if (self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter):
-            lost = True
-        elif (datetime.now() - self.lastUpdateTime > self.MAX_DELAY_MS):
-            lost = True
-        return lost
+            self.pointLost = True
+        # Check if time elapsed since last update not too long, or discard the point
+        elif (timeSinceLastUpdate.microseconds > self.MAX_DELAY_MS or timeSinceLastUpdate.seconds > 0):
+            self.pointLost = True
+        return self.pointLost
 
 
     class PositionUpdateNotifier(Observable):

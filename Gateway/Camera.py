@@ -58,6 +58,7 @@ class Camera:
                 if point.isLost():
                     print '------------ Lost --------------'
                     self.points2D.remove(point)
+                    self.point2DdeletedNotifier.notifyObservers()
         # Point not found, add it to the list and notify creation :
         if updated==False:
             print("CAMERA : NEW 2D Point  - " + str(x) + " - " + str(y))
@@ -118,4 +119,5 @@ class Camera:
         def notifyObservers(self):
                 self.setChanged()
                 Observable.notifyObservers(self)
+
 
