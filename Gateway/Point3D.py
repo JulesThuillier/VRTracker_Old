@@ -46,18 +46,18 @@ class Point3D:
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            print("Position update Observer in Point 3D")
+#            print("Position update Observer in Point 3D")
             #TODO Calculate 3D position
             if len(self.outer.points2D) > 1:
                 new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
-                self.outer.user.sendPositionUpdate(new3Dposition[0])
+                self.outer.user.sendPositionUpdate(new3Dposition)
 
 
     class NewPoint2DObserver(Observer):
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            print("New 2D Point Observer in Point 3D")
+#            print("New 2D Point Observer in Point 3D")
             if isinstance(observable.outer, Camera):
                 #TODO check if this point could be owned by this user, if yes add it to the list
                 self.outer.add(observable.outer.points2D[-1])
@@ -71,8 +71,8 @@ class Point3D:
         def update(self, observable, arg):
             print("2D Point deleted Observer in Point 3D")
             if isinstance(arg, Camera):
-                print ("points2D length : " + str(len(self.outer.points2D)))
+ #               print ("points2D length : " + str(len(self.outer.points2D)))
                 self.outer.delete(arg)
-                print ("points2D length after remove : " + str(len(self.outer.points2D)))
+  #              print ("points2D length after remove : " + str(len(self.outer.points2D)))
                 # Remove Observer for position update on 2D Point from Camera
                 observable.outer.points2D[-1].positionUpdateNotifier.deleteObserver(self.outer.point2DUpdateObserver)

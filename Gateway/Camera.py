@@ -9,7 +9,7 @@ from utils.Observer import Observable
 
 class Camera:
 
-    MAX_DISTANCE_BETWEEN_POINTS = 10
+    MAX_DISTANCE_BETWEEN_POINTS = 15
     MAX_SIZE_DIFF_BETWEEN_POINTS = 10
 
 
@@ -38,8 +38,8 @@ class Camera:
             return None
 
     def push(self, message):
-        print "\nPushed from : "
-        print self.client['address']
+#        print "\nPushed from : "
+#        print self.client['address']
         parsedPoint = self.parsePointMessage(message)
         if(parsedPoint != None):
             self.addPoint(parsedPoint['x'], parsedPoint['y'], parsedPoint['h'], parsedPoint['w'])
@@ -118,3 +118,4 @@ class Camera:
         def notifyObservers(self):
                 self.setChanged()
                 Observable.notifyObservers(self)
+

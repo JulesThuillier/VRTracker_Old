@@ -17,5 +17,6 @@ class User:
         :param position: Array containing X,Y,Z
         :return:
         """
-        strPosition = ":".join(position[0])
-        self.server.send_message(self.client, strPosition)
+	
+        strPosition = str(position[0,0])+':'+str(position[1,0])+':'+str(position[2,0])
+	self.server.send_message(self.client, strPosition)
