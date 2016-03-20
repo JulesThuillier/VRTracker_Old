@@ -27,7 +27,7 @@ class websocketserver:
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
-        print("Client(%d) said: %s" % (client['id'], message))
+#        print("Client(%d) said: %s" % (client['id'], message))
         self.parseMessage(client, message)
 
     def __init__(self, host='127.0.0.1'):

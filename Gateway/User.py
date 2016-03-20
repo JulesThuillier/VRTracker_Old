@@ -18,5 +18,5 @@ class User:
         :return:
         """
 	
-        strPosition = ":".join(position[0])
+        strPosition = str(position[0,0])+':'+str(position[1,0])+':'+str(position[2,0])
 	self.server.send_message(self.client, strPosition)
