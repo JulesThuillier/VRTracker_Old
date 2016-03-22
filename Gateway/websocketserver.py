@@ -23,11 +23,31 @@ class websocketserver:
     # Called for every client disconnecting
     def client_left(self, client, server):
         print("Client(%d) disconnected" % client['id'])
-        #TODO : Remove from list
+        # Remove client from its list
+        # TODO better delete (remove points etc...)
+
+        try:
+            del self.cameras[str(client['address'])]
+        except KeyError:
+            pass
+
+        try:
+            del self.users[str(client['address'])]
+        except KeyError:
+            pass
+
+        try:
+            del self.tags[str(client['address'])]
+        except KeyError:
+            pass
+
+        try:
+            del self.calibration[str(client['address'])]
+        except KeyError:
+            pass
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
-#        print("Client(%d) said: %s" % (client['id'], message))
         self.parseMessage(client, message)
 
     def __init__(self, host='127.0.0.1'):

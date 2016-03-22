@@ -24,7 +24,13 @@ class Point3D:
         print ("TODO")
 
     def add(self,point2D):
+        '''
+        Add 2D Point to this 3D Point calculation
+        :param point2D:
+        :return:
+        '''
         self.points2D.append(point2D)
+        point2D.assign(self)
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
@@ -32,18 +38,20 @@ class Point3D:
             self.pointLost = True
 
     def delete(self,point2D):
-        print "Delete Point2D"
-        print point2D
+        '''
+        Removes 2D Point from this 3D Point calculation
+        :param point2D:
+        :return:
+        '''
         # Remove the Point2D if parameter is a Point2D
         if isinstance(point2D, Point2D):
-            print "Is Point2D"
+            point2D.unassign()
             self.points2D.remove(point2D)
         # If the parameter is a Camera, we remove all instances of Point2D from that Camera
         elif isinstance(point2D, Camera):
-            print "Is Camera"
             for point in self.points2D:
                 if point.camera == point2D: # Here point2D is a Camera
-                    print "removing"
+                    point.unassign()
                     self.points2D.remove(point)
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
@@ -71,8 +79,6 @@ class Point3D:
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-#            print("Position update Observer in Point 3D")
-            #TODO Calculate 3D position
             if len(self.outer.points2D) > 1:
                 new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
                 self.outer.user.sendPositionUpdate(new3Dposition)
@@ -85,9 +91,7 @@ class Point3D:
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-#            print("New 2D Point Observer in Point 3D")
             if isinstance(observable.outer, Camera):
-                #TODO check if this point could be owned by this user, if yes add it to the list
                 temp2D = observable.outer.points2D[-1]
 
                 # User is lost and receive new 2D Point
@@ -106,6 +110,7 @@ class Point3D:
 
                     # Add the point to the user if user doesn't have 2 2D Points
                     if len(self.outer.points2D) < 2:
+                        print "Adding new 2D Point to 3D Point"
                         # Add the New 2D Point to this 3D Point
                         self.outer.add(temp2D)
                         # Add Observer for position update on last 2D Point added from Camera

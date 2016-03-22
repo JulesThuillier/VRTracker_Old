@@ -21,6 +21,7 @@ class Point2D:
         self.MAX_DELAY_MS = 500
         self.lastUpdateTime = datetime.now()
         self.pointLost = False
+        self.point3Dassigned = None
         self.camera = camera
         self.bufferSize = 50
         self.buffer = deque(maxlen=self.bufferSize)
@@ -35,7 +36,6 @@ class Point2D:
         self.lastUpdateTime = datetime.now()
         point = {'x': int(x), 'y': int(y), 'height': int(height), 'width': int(width)};
         self.buffer.append(point)
-        #TODO Notify 2D Point updated ==> Update 3D position
         self.positionUpdateNotifier.notifyObservers()
 
     # Warning : does not pop
@@ -48,22 +48,52 @@ class Point2D:
 
     # Check distance between last 2D point in buffer and the point in parameter (not squared)
     def distance(self, x, y):
+        '''
+        Measures distance between last 2D point in buffer
+        and the point in parameter (not squared)
+        Helps determine which point is which when a new frame is
+        received in Camera
+        :param x:
+        :param y:
+        :return:
+        '''
         lastxy = self.buffer[-1]
         distx = abs(lastxy['x'] - int(x))
         disty = abs(lastxy['y'] - int(y))
         return distx*distx + disty*disty
 
-    # Check distance between last 2D point in buffer and the point in parameter (not squared)
     def sizeDifference(self, height, width):
+        '''
+        Measures size difference between last 2D point in buffer
+        and the point in parameter (not squared)
+        Helps determine which point is which when a new frame is
+        received in Camera
+        :param height:
+        :param width:
+        :return:
+        '''
         lastxy = self.buffer[-1]
         h = abs(lastxy['height'] - int(height))
         w = abs(lastxy['width'] - int(width))
         return h*h + w*w
 
     def count(self):
+        '''
+        Simply counting frame updates from the camera
+        Incremented each time a frame is received without this point
+        Count is back to zero when the point is back in the frame
+        :return:
+        '''
         self.lastUpdateCounter += 1
 
     def isLost(self):
+        '''
+        Check if 2D point is lost
+        Either because the camera received too many frames
+        without this point, Or too much time elapsed since it
+        was last updated
+        :return:
+        '''
         timeSinceLastUpdate = datetime.now() - self.lastUpdateTime
         print timeSinceLastUpdate.microseconds
         if (self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter):
@@ -73,8 +103,29 @@ class Point2D:
             self.pointLost = True
         return self.pointLost
 
+    def assign(self, point3D):
+        '''
+        Save assignement of this 2D Point to a 3D point
+        This point cannot be assigned to another 3D Point
+        :param point3D:
+        :return:
+        '''
+        self.point3Dassigned = point3D
+
+    def unassign(self):
+        '''
+        Remove assignement of the 2D point to a 3D Point
+        This point if now free to be reassigned
+        :return:
+        '''
+        self.point3Dassigned = None
+
 
     class PositionUpdateNotifier(Observable):
+        '''
+        Notify Observers (in 3D Point) when the position
+        has been updated
+        '''
         def __init__(self, outer):
             Observable.__init__(self)
             self.outer = outer

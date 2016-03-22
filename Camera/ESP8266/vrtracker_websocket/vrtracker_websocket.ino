@@ -64,15 +64,7 @@ void setup() {
     // Initialize camera
     pixy.init();
 
-   /* WiFi.onEvent(WiFiEvent);
-    WiFi.begin("VR Tracker Gateway", "vrtracker");
-    
-    while (WiFi.status() != WL_CONNECTED && wifiConnectFailed==false) {
-      delay(500);
-      Serial.print(".");
-    }*/
-
-     byte mac[6];
+    byte mac[6];
     WiFi.macAddress(mac);
     char macadd[7];
     for(int i=0; i<6; i++){
