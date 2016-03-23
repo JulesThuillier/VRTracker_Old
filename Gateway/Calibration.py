@@ -3,6 +3,7 @@ from utils.Observer import Observer
 from Camera import Camera
 import numpy as np
 from parse import *
+import time
 
 class Calibration:
     """
@@ -17,12 +18,14 @@ class Calibration:
     world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
     cameras = {}
 
-    def __init__(self, cameras, server, client):
+    def __init__(self, server, client, cameras, tag):
         print "Init Calibration"
         self.cameras = cameras
         self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
         self.server = server
         self.client = client
+        self.tag = tag
+        self.tag.setCalibrationMode()
 
     def push(self, message):
         if message == "enter":
@@ -44,6 +47,26 @@ class Calibration:
         else:
             extracted_data = parse("calib:{}-{}-{}", message)
             if len(extracted_data.fixed) == 3:
+
+                print "calib0"
+                for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        self.cameras[key].prepToRecordCalibrationPoint2D()
+                        print self.cameras[key].macadress
+                        print self.cameras[key].points2D
+
+                self.tag.setRGB(1023,0,0)
+                self.tag.setIRonMax()
+                time.sleep(1)
+                self.tag.setIRoff()
+                self.tag.setCalibrationMode()
+
+                print "calib1"
+                for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        print self.cameras[key].macadress
+                        print self.cameras[key].points2D
+
                 self.server.send_message(self.client, "New calibration point received")
                 xyz = [int(extracted_data.fixed[0]), int(extracted_data.fixed[1]), int(extracted_data.fixed[2])]
                 self.world3DPoints = np.append(self.world3DPoints, [xyz], axis=0)

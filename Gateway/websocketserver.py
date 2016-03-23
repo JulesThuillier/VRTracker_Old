@@ -3,6 +3,7 @@ from websocket_server import WebsocketServer
 from Camera import Camera
 from User import User
 from Calibration import Calibration
+from Tag import Tag
 
 
 class websocketserver:
@@ -26,25 +27,24 @@ class websocketserver:
         # Remove client from its list
         # TODO better delete (remove points etc...)
 
-        try:
+        if(str(client['address']) in self.cameras):
             del self.cameras[str(client['address'])]
-        except KeyError:
-            pass
 
-        try:
+        elif(str(client['address']) in self.users):
+            # Remove Tag assignement because User left
+            self.users[str(client['address'])].removeTag()
             del self.users[str(client['address'])]
-        except KeyError:
-            pass
 
-        try:
-            del self.tags[str(client['address'])]
-        except KeyError:
-            pass
-
-        try:
+        elif(str(client['address']) in self.calibration):
             del self.calibration[str(client['address'])]
-        except KeyError:
-            pass
+
+        elif(str(client['address']) in self.tags):
+            # Remove Tag assignement to User because Tag left
+            for key in self.users:
+                if self.users[key].tag == self.tags[str(client['address'])]:
+                    self.users[key].removeTag()
+            del self.tags[str(client['address'])]
+
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
@@ -91,11 +91,15 @@ class websocketserver:
                         self.cameras[str(client['address'])].point2DdeletedNotifier.addObserver(self.users[key].position.point2DDeletedObserver)
 
             elif message.split("-")[0] == "tag":
-                print "Hello TAG"
-                # TODO
+                self.tags[str(client['address'])] = Tag(self.server, client, message.split("-")[1])
+                for key in self.users:
+                    if isinstance(self.users[key], User):
+                        # Assign a Tag to User with no Tag
+                        if self.users[key].tag == None:
+                            self.users[key].setTag(self.tags[str(client['address'])])
 
             elif message.split("-")[0] == "user":
-                user = User(client, self.server, message.split("-")[1])
+                user = User(self.server, client, message.split("-")[1])
                 self.users[str(client['address'])] = user
                 # Add Observers linking every user to every camera's update
                 for key in self.cameras:
@@ -103,5 +107,15 @@ class websocketserver:
                         self.cameras[key].new2DPointNotifier.addObserver(user.position.newPoint2DObserver)
                         self.cameras[key].point2DdeletedNotifier.addObserver(user.position.point2DDeletedObserver)
 
+                for key in self.tags:
+                    if isinstance(self.tags[key], Tag):
+                        # Assign a Tag to new User
+                        if self.tags[key].isAssigned() == False:
+                            user.setTag(self.tags[key])
+
             elif message == "calibration":
-                self.calibration[str(client['address'])] = Calibration(self.cameras, self.server, client)
+                if(len(self.tags)>0):
+                    self.calibration[str(client['address'])] = Calibration(self.server, client, self.cameras, self.tags.values()[0])
+                else:
+                    self.server.send_message(client, "Please connect a Tag first, and start Calibration again.")
+

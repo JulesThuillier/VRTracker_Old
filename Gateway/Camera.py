@@ -25,6 +25,7 @@ class Camera:
         self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
         self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
         self.calibrated = False
+        self.calibrating = False
 
         self.loadCameraPreferences()
 
@@ -43,7 +44,8 @@ class Camera:
             return None
 
     def push(self, message):
-        if self.calibrated != True:
+
+        if self.calibrated != True and self.calibrating != True:
             print "Calibrate Camera First !"
             return
         parsedPoint = self.parsePointMessage(message)
@@ -81,17 +83,16 @@ class Camera:
         self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
         self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
         self.points2D = [] # Clean all 2D Points
+        self.calibrating = True
 
     def exitCalibrationMode(self, world3DPoints):
         print self.client['id']
-
-
         pointsCalibrationCleaned = np.array([], dtype=np.float32).reshape(0,2)
         world3DPointsCleaned = np.array([], dtype=np.float32).reshape(0,3)
         for point in self.pointsCalibration:
             if(point[0] != -1 and point[1] != -1):
-                np.append(pointsCalibrationCleaned, point, axis=0)
-                np.append(world3DPointsCleaned, world3DPointsCleaned[self.pointsCalibration.index(point)], axis=0)
+                np.append(pointsCalibrationCleaned, [point], axis=0)
+                np.append(world3DPointsCleaned, [world3DPoints[self.pointsCalibration.index(point)]], axis=0)
 
         print "Calibration Points Cleaned : "
         print pointsCalibrationCleaned
@@ -101,8 +102,12 @@ class Camera:
         self.projection_matrix, position = compute.calculateProjectionMatrix(self, world3DPointsCleaned)
         self.saveCameraPreferences()
         self.calibrated = True
+        self.calibrating = False
         return position
 
+
+    def prepToRecordCalibrationPoint2D(self):
+        self.points2D = []
 
     def saveCalibrationPoint2D(self):
         '''

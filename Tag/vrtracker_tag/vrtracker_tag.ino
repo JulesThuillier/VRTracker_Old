@@ -41,6 +41,7 @@ void light_offon(uint16_t timeMS){
 
 // Turn the IR light ON
 void light_on(boolean power){
+  Serial.println("IR On");
   maxPower = power;
   digitalWrite(led_Ir_pin, HIGH); 
   if(maxPower){
@@ -61,6 +62,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
     switch(type) {
         case WStype_DISCONNECTED:
             Serial.printf("[WSc] Disconnected!\n");
+            light_off();
             break;
         case WStype_CONNECTED:
             {
@@ -74,7 +76,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
             String command = (char*)payload;
             Serial.println("Command Received : " + command);
             
-            if(command == "on:"){
+            if(command.startsWith("on:")){
               String strValue=command.substring(3);
               bool value = false;
               if(strValue == "1"){
@@ -92,19 +94,15 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
               light_offon(value);
             }
             else if(command.startsWith("rgb:")){
-              String strValue= command.substring(6);
-              Serial.println(strValue);
+              String strValue= command.substring(4);
               int index = strValue.indexOf('-');
-              String strR = strValue.substring(0, index+1);
-              Serial.println(strR);
+              String strR = strValue.substring(0, index);
               strValue = strValue.substring(index+1);
               index = strValue.indexOf('-');
-              String strG = strValue.substring(0, index+1);
-              Serial.println(strR);
+              String strG = strValue.substring(0, index);
               strValue = strValue.substring(index+1);
               index = strValue.indexOf('-');
-              String strB = strValue.substring(0, index+1);
-              Serial.println(strR);
+              String strB = strValue.substring(0, index);
               int r = strR.toInt();
               int g = strG.toInt();
               int b = strB.toInt();
@@ -136,21 +134,17 @@ void setup() {
     pinMode(led_Ir_pin_2, OUTPUT);
     pinMode(battery_Reading, INPUT);
 
-    analogWrite(led_Red_pin, 1023);
-    analogWrite(led_Green_pin, 1023);
-    analogWrite(led_Blue_pin, 1023);
-
-    digitalWrite(led_Ir_pin, LOW); 
-    digitalWrite(led_Ir_pin_2, LOW); 
-
- byte mac[6];
+    rgb(400,400,400);
+    light_off();
+    
+    byte mac[6];
     WiFi.macAddress(mac);
     char macadd[7];
     for(int i=0; i<6; i++){
         macadd[i] = (char)mac[i];
     }
     macadress = String(macadd[0],HEX) + String(macadd[1],HEX) + String(macadd[2],HEX) + String(macadd[3],HEX) + String(macadd[4],HEX) + String(macadd[5],HEX);
-    
+     
 
     WiFiManager wifiManager;
           //  wifiConnectFailed = true; 
