@@ -9,7 +9,7 @@ from utils.Observer import Observable
 
 class Camera:
 
-    MAX_DISTANCE_BETWEEN_POINTS = 25
+    MAX_DISTANCE_BETWEEN_POINTS = 20
     MAX_SIZE_DIFF_BETWEEN_POINTS = 10
 
 

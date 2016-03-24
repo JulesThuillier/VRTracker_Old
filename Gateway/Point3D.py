@@ -173,20 +173,9 @@ class Point3D:
                 # User is not lost and receive new 2D Point
                 else:
                     # 1: Check if new 2D Point comes from same camera as another 2D Point used here (if yes, discard)
-                    #for point in self.outer.points2D:
-                    #    if point.camera == temp2D.camera:
-                    #        print "2D Point discard : same camera - " + point.camera.macadress
-                    #        return
-
-                    # 1: Check if new 2D Point comes from same camera as another 2D Point used here (if yes, discard)
                     for point in self.outer.points2D:
-                        if point.camera.macadress == temp2D.camera.macadress:
-                            print "2D Point from same camera : Replace - " + point.camera.macadress
-                            self.outer.delete(point)
-                            # Add the New 2D Point to this 3D Point
-                            self.outer.add(temp2D)
-                            # Add Observer for position update on last 2D Point added from Camera
-                            observable.outer.points2D[-1].positionUpdateNotifier.addObserver(self.outer.point2DUpdateObserver)
+                        if point.camera == temp2D.camera:
+                            print "2D Point discard : same camera - " + point.camera.macadress
                             return
 
                     # 2: Calculate 3D Point position with new 2D point and check position difference (yes difference too high, discard)
