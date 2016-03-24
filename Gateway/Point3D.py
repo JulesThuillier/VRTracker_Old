@@ -135,6 +135,7 @@ class Point3D:
                         else:
                             list3DPositions = np.append(list3DPositions, value, axis=0)
 
+
                 list3DPositions =  np.average(list3DPositions, axis=0)
 
                #u print "LIST : " + str( list3DPositions)
