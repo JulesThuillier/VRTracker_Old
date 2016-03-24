@@ -77,7 +77,10 @@ class Point3D:
         return list(buffer)
 
     def smooth(self, positionList):
-        return np.average(positionList, axis=0, weights=range(0,np.ma.size(positionList, 0),1))
+        if np.ma.size(positionList, 0) > 1:
+            return np.average(positionList, axis=0, weights=range(0,np.ma.size(positionList, 0),1))
+        else:
+            return positionList[0,:]
 
 
     # Check distance between last 3D point in buffer and the point in parameter (not squared)
@@ -105,18 +108,18 @@ class Point3D:
                     for j in range(i+1, len(self.outer.points2D)):
                         value = compute.calculate3DPosition(self.outer.points2D[i], self.outer.points2D[j])
                         value = value.reshape(1,3)
-
                         list3DPositions = np.append(list3DPositions, value, axis=0)
                 list3DPositions =  np.average(list3DPositions, axis=0)
-
+               #u print "LIST : " + str( list3DPositions)
                 # List of 10 last positions
                 while np.ma.size(self.outer.buffer3DPositions, 0) >= 10:
-                    self.outer.buffer3DPositions = np.delete(self.outer.buffer3DPositions, 9, 0)
+                    self.outer.buffer3DPositions = np.delete(self.outer.buffer3DPositions, 0, 0)
 
                 self.outer.buffer3DPositions = np.append(self.outer.buffer3DPositions, [list3DPositions], axis=0)
+                #print self.outer.buffer3DPositions
 
                 smoothedPosition = self.outer.smooth(self.outer.buffer3DPositions)
-
+               # print "SMOOTHED : " + str(smoothedPosition)
                 self.outer.user.sendPositionUpdate(smoothedPosition)
                 self.outer.lastXYZ = smoothedPosition
             else:
@@ -133,8 +136,8 @@ class Point3D:
                 temp2D = observable.outer.points2D[-1]
 
                 # User is lost and receive new 2D Point
-                #if self.outer.pointLost:
-                if True:
+                if self.outer.pointLost:
+                #if True:
 
                     # 1: Check if new 2D Point comes from same camera as another 2D Point used here (if yes, discard)
                     for point in self.outer.points2D:

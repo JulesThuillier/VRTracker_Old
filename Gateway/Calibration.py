@@ -40,12 +40,11 @@ class Calibration:
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         if len(self.cameras[key].listOf2D3DPairCalibration)<4:
-                            self.server.send_message(self.client, "Camera " + self.cameras[key].macadress + " has only " + str(len(self.cameras[key].listOf2D3DPairCalibration)) + " calibration point, 4 are required. Please continue calibration")
-                            return
-            for key in self.cameras:
-                    if isinstance(self.cameras[key], Camera):
-                        camPosition = self.cameras[key].exitCalibrationMode()
-                        self.server.send_message(self.client, str(camPosition))
+                            self.server.send_message(self.client, "Camera " + self.cameras[key].macadress + " has only " + str(len(self.cameras[key].listOf2D3DPairCalibration)) + " calibration point, 4 are required. This camera won't be calibrated")
+                        else:
+                            camPosition = self.cameras[key].exitCalibrationMode()
+                            self.server.send_message(self.client, str(camPosition))
+
             self.tag.setIRoff()
             self.tag.setRGBoff()
 

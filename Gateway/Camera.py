@@ -88,14 +88,13 @@ class Camera:
 
 
     def enterCalibrationMode(self):
-        self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
         self.listOf2D3DPairCalibration = []
         self.points2D = [] # Clean all 2D Points
         self.calibrating = True
 
     def exitCalibrationMode(self):
         print self.client['id']
-
+        self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
         points2DCalibration = np.array([], dtype=np.float32).reshape(0,2)
         world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
         print self.listOf2D3DPairCalibration

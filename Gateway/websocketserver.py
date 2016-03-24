@@ -43,7 +43,7 @@ class websocketserver:
 
         elif(str(client['address']) in self.tags):
             print "Tag disconnected : " + str(client['address'])
-            # Remove Tag assignement to User because Tag left
+            # Remove Tag assignement to User because Tag left AND kill 3D point
             for key in self.users:
                 if self.users[key].tag == self.tags[str(client['address'])]:
                     self.users[key].removeTag()

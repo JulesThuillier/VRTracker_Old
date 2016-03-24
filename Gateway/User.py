@@ -10,8 +10,8 @@ class User:
         self.macadress = mac
         self.client = client
         self.server = server
-        self.position = Point3D.Point3D(self)
         self.tag = None
+        self.position = Point3D.Point3D(self)
 
     def sendPositionUpdate(self, position):
         """
@@ -25,12 +25,14 @@ class User:
     def setTag(self, tag):
         self.tag = tag
         self.tag.assign()
+        self.position = Point3D.Point3D(self)
 
     def removeTag(self):
         if self.tag != None and isinstance(self.tag, Tag):
             print "Tag unassigned"
             self.tag.unAssign()
             self.tag = None
+            del self.position
 
     def __del__(self):
         del self.position
