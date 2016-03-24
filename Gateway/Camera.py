@@ -23,7 +23,7 @@ class Camera:
         self.camera_matrix = np.float64([[247.9139798, 0., 155.30251177], [0., 248.19822494, 100.74688813], [0.,  0., 1.]])
         self.distortion_coefficient = np.float64([-0.45977769,  0.29782977, -0.00162724,  0.00046035, -0.16351777])
         self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
-        self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
+        self.listOf2D3DPairCalibration = []
         self.calibrated = False
         self.calibrating = False
 
@@ -51,6 +51,14 @@ class Camera:
         parsedPoint = self.parsePointMessage(message)
         if(parsedPoint != None):
             self.addPoint(parsedPoint['x'], parsedPoint['y'], parsedPoint['h'], parsedPoint['w'])
+
+    # Checks if points are lost
+    def update(self):
+        for point in self.points2D:
+            if point.isLost():
+                self.points2D.remove(point)
+                self.point2DdeletedNotifier.notifyObservers()
+
 
     # Track if the new point received correspond to a point already recorded (to follow the point)
     # Argument is the point data in an array outputed by "parse" function
@@ -81,25 +89,22 @@ class Camera:
 
     def enterCalibrationMode(self):
         self.projection_matrix = np.array([], dtype=np.float32).reshape(0,3,4)
-        self.pointsCalibration = np.array([], dtype=np.float32).reshape(0,2)
+        self.listOf2D3DPairCalibration = []
         self.points2D = [] # Clean all 2D Points
         self.calibrating = True
 
-    def exitCalibrationMode(self, world3DPoints):
+    def exitCalibrationMode(self):
         print self.client['id']
-        pointsCalibrationCleaned = np.array([], dtype=np.float32).reshape(0,2)
-        world3DPointsCleaned = np.array([], dtype=np.float32).reshape(0,3)
-        for point in self.pointsCalibration:
-            if(point[0] != -1 and point[1] != -1):
-                np.append(pointsCalibrationCleaned, [point], axis=0)
-                np.append(world3DPointsCleaned, [world3DPoints[self.pointsCalibration.index(point)]], axis=0)
 
-        print "Calibration Points Cleaned : "
-        print pointsCalibrationCleaned
-        self.pointsCalibration = pointsCalibrationCleaned
-        print world3DPointsCleaned
+        points2DCalibration = np.array([], dtype=np.float32).reshape(0,2)
+        world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
+        print self.listOf2D3DPairCalibration
 
-        self.projection_matrix, position = compute.calculateProjectionMatrix(self, world3DPointsCleaned)
+        for pair in self.listOf2D3DPairCalibration:
+            world3DPoints = np.append(world3DPoints, [pair[0]], axis=0)
+            points2DCalibration = np.append(points2DCalibration, [pair[1]], axis=0)
+
+        self.projection_matrix, position = compute.calculateProjectionMatrix(self, points2DCalibration, world3DPoints)
         self.saveCameraPreferences()
         self.calibrated = True
         self.calibrating = False
@@ -109,7 +114,7 @@ class Camera:
     def prepToRecordCalibrationPoint2D(self):
         self.points2D = []
 
-    def saveCalibrationPoint2D(self):
+    def saveCalibrationPoint2D(self, xyz):
         '''
         Save current 2D Point XY into an array to later
         associate this 2D array to 3D world coordinates
@@ -118,11 +123,15 @@ class Camera:
         '''
         if(len(self.points2D)>0):
             xy = [self.points2D[-1].buffer[-1]['x'], self.points2D[-1].buffer[-1]['y']]
-            self.points2D = [] # Clean all 2D Points
-        else:
-            xy=[-1,-1] # Means the point wasn't seen by the camera
-        self.pointsCalibration = np.append(self.pointsCalibration, [xy], axis=0)
-        return xy
+            for pair in self.listOf2D3DPairCalibration:
+                if pair[0] == xyz:
+                    print "replacing pair"
+                    pair[1] = xy
+                    self.points2D = [] # Clean all 2D Points
+                    return xy
+            # If the XYZ point is not already recorded, add it to list
+            self.listOf2D3DPairCalibration.append([xyz, xy])
+            return xy
 
     def loadCameraPreferences(self):
         '''

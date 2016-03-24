@@ -21,8 +21,6 @@ def calculate3DPosition(Point2D1, Point2D2):
 
     xy1 = [Point2D1.get()['x'], Point2D1.get()['y']]
     xy2 = [Point2D2.get()['x'], Point2D2.get()['y']]
-    print str(xy1) + " - " + str(Point2D1)
-    print str(xy2) + " - " + str(Point2D2)
     triangulationOutput = cv2.triangulatePoints(Point2D1.camera.projection_matrix,Point2D2.camera.projection_matrix, np.float32(xy1), np.float32(xy2))
 
     mypoint1 = np.array([triangulationOutput[0], triangulationOutput[1], triangulationOutput[2]])
@@ -40,17 +38,16 @@ def calculate3DPosition(Point2D1, Point2D2):
     #TODO calculate point again with second proj mat, and calculate middle
     return output
 
-def calculateProjectionMatrix(camera, points3D):
+def calculateProjectionMatrix(camera, listPoint2D, listPoint3D):
+    ret, rvec, tvec = cv2.solvePnP(listPoint3D, listPoint2D, camera.camera_matrix, camera.distortion_coefficient)
+    rotM_cam = cv2.Rodrigues(rvec)[0]
 
-	ret, rvec, tvec = cv2.solvePnP(points3D, camera.pointsCalibration, camera.camera_matrix, camera.distortion_coefficient)
-	rotM_cam = cv2.Rodrigues(rvec)[0]
+    # calculate camera position (= translation), from 0,0,0 point
+    cameraPosition = -np.matrix(rotM_cam).T * np.matrix(tvec)
+    print "Camera position : "
+    print cameraPosition
 
-	# calculate camera position (= translation), from 0,0,0 point
-	cameraPosition = -np.matrix(rotM_cam).T * np.matrix(tvec)
-	print "Camera position : "
-	print cameraPosition
+    camMatrix = np.append(cv2.Rodrigues(rvec)[0], tvec, 1)
+    projectionMatrix = np.dot(camera.camera_matrix, camMatrix)
 
-	camMatrix = np.append(cv2.Rodrigues(rvec)[0], tvec, 1)
-	projectionMatrix = np.dot(camera.camera_matrix, camMatrix)
-
-	return projectionMatrix, cameraPosition
+    return projectionMatrix, cameraPosition

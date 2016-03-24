@@ -16,11 +16,10 @@ class User:
     def sendPositionUpdate(self, position):
         """
         Send updated 3D position to the User over WebSocket
-        :param position: Array containing X,Y,Z
+        :param position: Numpy Array containing X,Y,Z
         :return:
         """
-        strPosition = str(position[0,0])+':'+str(position[1,0])+':'+str(position[2,0])
-        print strPosition
+        strPosition = str(position[0])+':'+str(position[1])+':'+str(position[2])
         self.server.send_message(self.client, strPosition)
 
     def setTag(self, tag):
@@ -32,3 +31,7 @@ class User:
             print "Tag unassigned"
             self.tag.unAssign()
             self.tag = None
+
+    def __del__(self):
+        del self.position
+        self.tag.unAssign()

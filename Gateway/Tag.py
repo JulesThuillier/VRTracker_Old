@@ -13,7 +13,7 @@ class Tag:
 
     def assign(self):
         self.assigned = True
-        self.setIRon()
+        self.setIRonMax()
         self.setRGBoff()
 
     def unAssign(self):
@@ -42,7 +42,7 @@ class Tag:
     def debugUserTracked(self):
         self.setRGB(0,700,0)
 
-    def debufUserLost(self):
+    def debugUserLost(self):
         self.setRGB(700,0,0)
 
     def setCalibrationMode(self):

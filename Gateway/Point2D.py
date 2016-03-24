@@ -18,7 +18,7 @@ class Point2D:
     timeLastUpdated = 0
 
     def __init__(self, x, y, height, width, camera):
-        self.MAX_DELAY_MS = 500
+        self.MAX_DELAY_MS = 200000
         self.lastUpdateTime = datetime.now()
         self.pointLost = False
         self.point3Dassigned = None
@@ -95,7 +95,7 @@ class Point2D:
         :return:
         '''
         timeSinceLastUpdate = datetime.now() - self.lastUpdateTime
-        print timeSinceLastUpdate.microseconds
+       # print timeSinceLastUpdate.microseconds
         if (self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter):
             self.pointLost = True
         # Check if time elapsed since last update not too long, or discard the point

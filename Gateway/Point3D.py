@@ -3,12 +3,13 @@ from Camera import Camera
 from utils.Observer import Observer
 from Point2D import Point2D
 import compute
+import numpy as np
 
 
 # Represent a 3D Position with observers on 2D point updates
 class Point3D:
 
-    MAX_DISTANCE_ERROR = 30
+    MAX_DISTANCE_ERROR = 20
 
     def __init__(self, user):
         print "Init Point 3D"
@@ -19,6 +20,7 @@ class Point3D:
         self.newPoint2DObserver = Point3D.NewPoint2DObserver(self)
         self.point2DDeletedObserver = Point3D.Point2DDeletedObserver(self)
         self.point2DUpdateObserver = Point3D.Point2DUpdateObserver(self)
+        self.buffer3DPositions = np.array([], dtype=np.float32).reshape(0,3)
 
     def update(self):
         print ("TODO")
@@ -34,8 +36,12 @@ class Point3D:
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
+            if(self.user.tag != None):
+                self.user.tag.debugUserTracked()
         else:
             self.pointLost = True
+            if(self.user.tag != None):
+                self.user.tag.debugUserLost()
 
     def delete(self,point2D):
         '''
@@ -56,8 +62,12 @@ class Point3D:
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
+            if(self.user.tag != None):
+                self.user.tag.debugUserTracked()
         else:
             self.pointLost = True
+            if(self.user.tag != None):
+                self.user.tag.debugUserLost()
 
     # Warning : does not pop
     def get(self):
@@ -66,40 +76,69 @@ class Point3D:
     def getAll(self):
         return list(buffer)
 
+    def smooth(self, positionList):
+        return np.average(positionList, axis=0, weights=range(0,np.ma.size(positionList, 0),1))
+
 
     # Check distance between last 3D point in buffer and the point in parameter (not squared)
     def distance(self, x, y, z):
-        distx = abs(self.lastXYZ[0] - x)
-        disty = abs(self.lastXYZ[1] - y)
-        distz = abs(self.lastXYZ[2] - z)
-        return distx*distx + disty*disty + distz*distz
+        if len(self.lastXYZ) == 3:
+            distx = abs(self.lastXYZ[0] - x)
+            disty = abs(self.lastXYZ[1] - y)
+            distz = abs(self.lastXYZ[2] - z)
+            return distx*distx + disty*disty + distz*distz
 
 
     class Point2DUpdateObserver(Observer):
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            if len(self.outer.points2D) > 1:
-                new3Dposition = compute.calculate3DPosition(self.outer.points2D[len(self.outer.points2D)-1], self.outer.points2D[len(self.outer.points2D)-2])
-                self.outer.user.sendPositionUpdate(new3Dposition)
-                self.outer.lastXYZ = [new3Dposition[0,0], new3Dposition[1,0], new3Dposition[2,0]]
+            if len(self.outer.points2D) >1:
+
+             # elif len(self.outer.points2D) > 2:
+                list3DPositions = np.array([], dtype=np.float32).reshape(0,3)
+
+                # Calculate all 3D positions from all combinations of 2D pairs
+                # and average those positions.
+               # print "====================== 2D UPDATE OBSERVER ======================"
+                for i in range(0, len(self.outer.points2D)-1):
+                    for j in range(i+1, len(self.outer.points2D)):
+                        value = compute.calculate3DPosition(self.outer.points2D[i], self.outer.points2D[j])
+                        value = value.reshape(1,3)
+
+                        list3DPositions = np.append(list3DPositions, value, axis=0)
+                list3DPositions =  np.average(list3DPositions, axis=0)
+
+                # List of 10 last positions
+                while np.ma.size(self.outer.buffer3DPositions, 0) >= 10:
+                    self.outer.buffer3DPositions = np.delete(self.outer.buffer3DPositions, 9, 0)
+
+                self.outer.buffer3DPositions = np.append(self.outer.buffer3DPositions, [list3DPositions], axis=0)
+
+                smoothedPosition = self.outer.smooth(self.outer.buffer3DPositions)
+
+                self.outer.user.sendPositionUpdate(smoothedPosition)
+                self.outer.lastXYZ = smoothedPosition
             else:
                 self.outer.pointLost = True
+                self.outer.user.tag.debugUserLost()
 
 
     class NewPoint2DObserver(Observer):
         def __init__(self, outer):
             self.outer = outer
+
         def update(self, observable, arg):
             if isinstance(observable.outer, Camera):
                 temp2D = observable.outer.points2D[-1]
 
                 # User is lost and receive new 2D Point
-                if self.outer.pointLost:
+                #if self.outer.pointLost:
+                if True:
 
                     # 1: Check if new 2D Point comes from same camera as another 2D Point used here (if yes, discard)
                     for point in self.outer.points2D:
-                        if point.camera == temp2D.camera:
+                        if point.camera.macadress == temp2D.camera.macadress:
                             print "2D Point from same camera : Replace"
                             self.outer.delete(point)
                             # Add the New 2D Point to this 3D Point
@@ -126,15 +165,19 @@ class Point3D:
                             print "2D Point discard : same camera"
                             return
 
-
                     # 2: Calculate 3D Point position with new 2D point and check position difference (yes difference too high, discard)
                     for point in self.outer.points2D:
-                        temp3D = compute.calculate3DPosition(point, temp2D)
-                        distance = self.outer.distance(temp3D[0,0], temp3D[1,0], temp3D[2,0])
-                        print distance
-                        if(distance > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
-                            print "2D Point discard : too far"
-                            return
+                        if point.isLost() ==  False:
+                            temp3D = compute.calculate3DPosition(point, temp2D)
+                         #   print "3D TEST : "
+                         #   print str(temp3D)
+                         #   print "FROM : " + point.camera.macadress + " count : "  + str(len(point.camera.points2D))
+                            distance = self.outer.distance(temp3D[0,0], temp3D[1,0], temp3D[2,0])
+                          #  print "DISTANCE : " + str(distance)
+                            if(distance > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR):
+                                print "2D Point discard : too far"
+                                #Todo Get this back working
+                                return
 
                     # If we get there, user is not lost, and new point is OK
                     # Add the New 2D Point to this 3D Point
@@ -152,3 +195,8 @@ class Point3D:
             # Remove Observer for position update on 2D Point from Camera
            # observable.outer.points2D[-1].positionUpdateNotifier.deleteObserver(self.outer.point2DUpdateObserver)
 
+    def __del__(self):
+        for point in self.points2D:
+            point.positionUpdateNotifier.deleteObserver(self.point2DUpdateObserver)
+            point.camera.new2DPointNotifier.deleteObserver(self.newPoint2DObserver)
+            point.camera.point2DdeletedNotifier.deleteObserver(self.point2DDeletedObserver)

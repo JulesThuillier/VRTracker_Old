@@ -28,17 +28,21 @@ class websocketserver:
         # TODO better delete (remove points etc...)
 
         if(str(client['address']) in self.cameras):
+            print "Camera disconnected : " + str(client['address'])
             del self.cameras[str(client['address'])]
 
         elif(str(client['address']) in self.users):
             # Remove Tag assignement because User left
+            print "User disconnected : " + str(client['address'])
             self.users[str(client['address'])].removeTag()
             del self.users[str(client['address'])]
 
         elif(str(client['address']) in self.calibration):
+            print "Calibration disconnected : " + str(client['address'])
             del self.calibration[str(client['address'])]
 
         elif(str(client['address']) in self.tags):
+            print "Tag disconnected : " + str(client['address'])
             # Remove Tag assignement to User because Tag left
             for key in self.users:
                 if self.users[key].tag == self.tags[str(client['address'])]:
@@ -69,6 +73,10 @@ class websocketserver:
         if self.cameras.has_key(str(client['address'])):
             #print "Message from Camera"
             self.cameras[str(client['address'])].push(message)
+            # Update all cameras counters
+            #Todo: Change this method for checking all cameras for lost point (auto check inside point2D ?)
+            for key in self.cameras.keys():
+                self.cameras[key].update()
 
         elif self.users.has_key(str(client['address'])):
             print "Message from User"

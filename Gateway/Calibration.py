@@ -15,13 +15,11 @@ class Calibration:
     """
 
     points2D = []
-    world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
     cameras = {}
 
     def __init__(self, server, client, cameras, tag):
         print "Init Calibration"
         self.cameras = cameras
-        self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
         self.server = server
         self.client = client
         self.tag = tag
@@ -30,7 +28,6 @@ class Calibration:
     def push(self, message):
         if message == "enter":
             print "Start calibration"
-            self.world3DPoints = np.array([], dtype=np.float32).reshape(0,3)
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         self.cameras[key].enterCalibrationMode()
@@ -42,35 +39,34 @@ class Calibration:
             self.server.send_message(self.client, "Calibration Finished, calculating matrix...")
             for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
-                        camPosition = self.cameras[key].exitCalibrationMode(self.world3DPoints)
+                        if len(self.cameras[key].listOf2D3DPairCalibration)<4:
+                            self.server.send_message(self.client, "Camera " + self.cameras[key].macadress + " has only " + str(len(self.cameras[key].listOf2D3DPairCalibration)) + " calibration point, 4 are required. Please continue calibration")
+                            return
+            for key in self.cameras:
+                    if isinstance(self.cameras[key], Camera):
+                        camPosition = self.cameras[key].exitCalibrationMode()
                         self.server.send_message(self.client, str(camPosition))
+            self.tag.setIRoff()
+            self.tag.setRGBoff()
+
         else:
             extracted_data = parse("calib:{}-{}-{}", message)
-            if len(extracted_data.fixed) == 3:
+            if extracted_data != None and len(extracted_data.fixed) == 3:
 
-                print "calib0"
                 for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
                         self.cameras[key].prepToRecordCalibrationPoint2D()
-                        print self.cameras[key].macadress
-                        print self.cameras[key].points2D
-
+                # Toggle IR Led of the Tag for 1 second to record the points
                 self.tag.setRGB(1023,0,0)
                 self.tag.setIRonMax()
                 time.sleep(1)
                 self.tag.setIRoff()
                 self.tag.setCalibrationMode()
 
-                print "calib1"
-                for key in self.cameras:
-                    if isinstance(self.cameras[key], Camera):
-                        print self.cameras[key].macadress
-                        print self.cameras[key].points2D
-
                 self.server.send_message(self.client, "New calibration point received")
                 xyz = [int(extracted_data.fixed[0]), int(extracted_data.fixed[1]), int(extracted_data.fixed[2])]
-                self.world3DPoints = np.append(self.world3DPoints, [xyz], axis=0)
+
                 for key in self.cameras:
                     if isinstance(self.cameras[key], Camera):
-                        xyposition = self.cameras[key].saveCalibrationPoint2D()
+                        xyposition = self.cameras[key].saveCalibrationPoint2D(xyz)
                         self.server.send_message(self.client, "Camera " + str(key) + " 2D position : " + str(xyposition))
