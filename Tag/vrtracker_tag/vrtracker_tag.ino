@@ -80,7 +80,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
               String strValue=command.substring(3);
               bool value = false;
               if(strValue == "1"){
-                value = true;
+                value = true;a
               }
               light_on(value);
             }

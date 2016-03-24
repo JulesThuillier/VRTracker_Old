@@ -33,6 +33,7 @@ class Point3D:
         '''
         self.points2D.append(point2D)
         point2D.assign(self)
+        print "ADDING POINT FROM : " + point2D.camera.macadress
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
@@ -42,6 +43,7 @@ class Point3D:
             self.pointLost = True
             if(self.user.tag != None):
                 self.user.tag.debugUserLost()
+
 
     def delete(self,point2D):
         '''
@@ -57,6 +59,7 @@ class Point3D:
         elif isinstance(point2D, Camera):
             for point in self.points2D:
                 if point.camera == point2D: # Here point2D is a Camera
+                    print "REMOVING POINT FROM : " + point2D.macadress
                     point.unassign()
                     self.points2D.remove(point)
         # Check if there is at least two points, otherwise 3D Point is Lost
@@ -123,6 +126,7 @@ class Point3D:
                 self.outer.user.sendPositionUpdate(smoothedPosition)
                 self.outer.lastXYZ = smoothedPosition
             else:
+                print "3D point LOST"
                 self.outer.pointLost = True
                 self.outer.user.tag.debugUserLost()
 
@@ -137,7 +141,6 @@ class Point3D:
 
                 # User is lost and receive new 2D Point
                 if self.outer.pointLost:
-                #if True:
 
                     # 1: Check if new 2D Point comes from same camera as another 2D Point used here (if yes, discard)
                     for point in self.outer.points2D:
@@ -193,7 +196,7 @@ class Point3D:
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            print("2D Point deleted Observer in Point 3D")
+            print("2D Point deleted Observer in Point 3D from Camera : ")
             self.outer.delete(observable.outer)
             # Remove Observer for position update on 2D Point from Camera
            # observable.outer.points2D[-1].positionUpdateNotifier.deleteObserver(self.outer.point2DUpdateObserver)
