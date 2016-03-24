@@ -101,8 +101,8 @@ class Point2D:
             print "LOST : FRAME"
         # Check if time elapsed since last update not too long, or discard the point
         elif (timeSinceLastUpdate.microseconds > self.MAX_DELAY_MS or timeSinceLastUpdate.seconds > 0):
-            print "LOST : TOO OLD"
             self.pointLost = True
+            print "LOST : TOO OLD"
         return self.pointLost
 
     def assign(self, point3D):
