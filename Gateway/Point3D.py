@@ -9,7 +9,7 @@ import numpy as np
 # Represent a 3D Position with observers on 2D point updates
 class Point3D:
 
-    MAX_DISTANCE_ERROR = 20
+    MAX_DISTANCE_ERROR = 30
 
     def __init__(self, user):
         print "Init Point 3D"
@@ -57,7 +57,7 @@ class Point3D:
             self.points2D.remove(point2D)
             # Remove Observer for position update on 2D Point from Camera
             point2D.positionUpdateNotifier.deleteObserver(self.point2DUpdateObserver)
-            #print "REMOVING POINT FROM 2 : " + point2D.camera.macadress
+            print "REMOVING POINT FROM 2 : " + point2D.camera.macadress
 
         # If the parameter is a Camera, we remove all instances of Point2D from that Camera
         elif isinstance(point2D, Camera):
@@ -67,7 +67,7 @@ class Point3D:
                     point.positionUpdateNotifier.deleteObserver(self.point2DUpdateObserver)
                     point.unassign()
                     self.points2D.remove(point)
-                   # print "REMOVING POINT FROM : " + point2D.macadress
+                    print "REMOVING POINT FROM : " + point2D.macadress
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
@@ -107,18 +107,36 @@ class Point3D:
         def update(self, observable, arg):
             if len(self.outer.points2D) > 1 :
 #                print "COUNT : " + str(len(self.outer.points2D))
+
              # elif len(self.outer.points2D) > 2:
                 list3DPositions = np.array([], dtype=np.float32).reshape(0,3)
 
                 # Calculate all 3D positions from all combinations of 2D pairs
                 # and average those positions.
                # print "====================== 2D UPDATE OBSERVER ======================"
+                errorPair = []
                 for i in range(0, len(self.outer.points2D)-1):
                     for j in range(i+1, len(self.outer.points2D)):
                         value = compute.calculate3DPosition(self.outer.points2D[i], self.outer.points2D[j])
                         value = value.reshape(1,3)
-                        list3DPositions = np.append(list3DPositions, value, axis=0)
+#			print value
+                        if self.outer.distance(value[0,0], value[0,1], value[0,2]) > self.outer.MAX_DISTANCE_ERROR*self.outer.MAX_DISTANCE_ERROR:
+                            print "TOO FAR"
+                            if i in errorPair:
+                                self.outer.delete(self.outer.points2D[i])
+                                return
+                            elif j in errorPair:
+                                self.outer.delete(self.outer.points2D[j])
+                                return
+                            else:
+                                errorPair.append(i)
+                                errorPair.append(j)
+
+                        else:
+                            list3DPositions = np.append(list3DPositions, value, axis=0)
+
                 list3DPositions =  np.average(list3DPositions, axis=0)
+
                #u print "LIST : " + str( list3DPositions)
                 # List of 10 last positions
                 while np.ma.size(self.outer.buffer3DPositions, 0) >= 10:
