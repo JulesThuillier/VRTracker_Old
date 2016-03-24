@@ -54,6 +54,7 @@ class Point3D:
         # Remove the Point2D if parameter is a Point2D
         if isinstance(point2D, Point2D):
             point2D.unassign()
+            print "REMOVING POINT FROM 2 : " + point2D.camera.macadress
             self.points2D.remove(point2D)
         # If the parameter is a Camera, we remove all instances of Point2D from that Camera
         elif isinstance(point2D, Camera):
