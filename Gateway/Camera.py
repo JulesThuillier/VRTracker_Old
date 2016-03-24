@@ -77,14 +77,14 @@ class Camera:
                 point.count()
                 # Remove lost points
                 if point.isLost():
-                    print '------------ Lost --------------'
+                   # print '------------ Lost --------------'
                     self.point2DdeletedNotifier.notifyObservers()
                     self.points2D.remove(point)
 
         # Point not found, add it to the list and notify creation :
         if updated==False:
-            print("CAMERA : NEW 2D Point  - " + str(x) + " - " + str(y))
-            print self.points2D
+           # print("CAMERA : NEW 2D Point  - " + str(x) + " - " + str(y))
+           # print self.points2D
             newPoint = Point2D(x, y, height, width, self)
             self.points2D.append(newPoint)
             self.new2DPointNotifier.notifyObservers()
