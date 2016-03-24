@@ -67,10 +67,12 @@ class Camera:
         updated = False
         for point in self.points2D:
             if point.distance(x, y) < self.MAX_DISTANCE_BETWEEN_POINTS*self.MAX_DISTANCE_BETWEEN_POINTS and point.sizeDifference(height, width) < self.MAX_SIZE_DIFF_BETWEEN_POINTS*self.MAX_SIZE_DIFF_BETWEEN_POINTS :
-                point.update(x, y, height, width)
+
                 # Notify as new point if it is still unassigned
                 if(point.point3Dassigned == None):
                     self.new2DPointNotifier.notifyObservers()
+                else:
+                    point.update(x, y, height, width)
                 updated = True
             else:
                 point.count()
