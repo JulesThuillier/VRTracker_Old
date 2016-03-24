@@ -18,7 +18,7 @@ class Point2D:
     timeLastUpdated = 0
 
     def __init__(self, x, y, height, width, camera):
-        self.MAX_DELAY_MS = 200000
+        self.MAX_DELAY_MS = 500000
         self.lastUpdateTime = datetime.now()
         self.pointLost = False
         self.point3Dassigned = None
