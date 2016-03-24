@@ -98,8 +98,10 @@ class Point2D:
        # print timeSinceLastUpdate.microseconds
         if (self.MAX_FRAME_LOST_BEFORE_DELETE < self.lastUpdateCounter):
             self.pointLost = True
+            print "LOST : FRAME"
         # Check if time elapsed since last update not too long, or discard the point
         elif (timeSinceLastUpdate.microseconds > self.MAX_DELAY_MS or timeSinceLastUpdate.seconds > 0):
+            print "LOST : TOO OLD"
             self.pointLost = True
         return self.pointLost
 
