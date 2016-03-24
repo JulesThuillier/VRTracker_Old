@@ -56,10 +56,8 @@ class Camera:
     def update(self):
         for point in self.points2D:
             if point.isLost():
-                self.points2D.remove(point)
                 self.point2DdeletedNotifier.notifyObservers()
-
-
+                self.points2D.remove(point)
 
     # Track if the new point received correspond to a point already recorded (to follow the point)
     # Argument is the point data in an array outputed by "parse" function
@@ -79,8 +77,9 @@ class Camera:
                 # Remove lost points
                 if point.isLost():
                     print '------------ Lost --------------'
-                    self.points2D.remove(point)
                     self.point2DdeletedNotifier.notifyObservers()
+                    self.points2D.remove(point)
+
         # Point not found, add it to the list and notify creation :
         if updated==False:
             print("CAMERA : NEW 2D Point  - " + str(x) + " - " + str(y))

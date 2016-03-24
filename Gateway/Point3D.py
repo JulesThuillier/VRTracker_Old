@@ -54,21 +54,20 @@ class Point3D:
         # Remove the Point2D if parameter is a Point2D
         if isinstance(point2D, Point2D):
             point2D.unassign()
-            print "REMOVING POINT FROM 2 : " + point2D.camera.macadress
             self.points2D.remove(point2D)
-
             # Remove Observer for position update on 2D Point from Camera
             point2D.positionUpdateNotifier.deleteObserver(self.point2DUpdateObserver)
+            print "REMOVING POINT FROM 2 : " + point2D.camera.macadress
 
         # If the parameter is a Camera, we remove all instances of Point2D from that Camera
         elif isinstance(point2D, Camera):
             for point in self.points2D:
                 if point.camera == point2D: # Here point2D is a Camera
-                    print "REMOVING POINT FROM : " + point2D.macadress
                      # Remove Observer for position update on 2D Point from Camera
                     point.positionUpdateNotifier.deleteObserver(self.point2DUpdateObserver)
                     point.unassign()
                     self.points2D.remove(point)
+                    print "REMOVING POINT FROM : " + point2D.macadress
         # Check if there is at least two points, otherwise 3D Point is Lost
         if(len(self.points2D)>1):
             self.pointLost = False
