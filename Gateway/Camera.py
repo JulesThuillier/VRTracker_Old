@@ -54,10 +54,11 @@ class Camera:
 
     # Checks if points are lost
     def update(self):
-        for point in self.points2D:
-            if point.isLost():
-                self.point2DdeletedNotifier.notifyObservers()
-                self.points2D.remove(point)
+        if(self.calibrating == False):
+            for point in self.points2D:
+                if point.isLost():
+                    self.point2DdeletedNotifier.notifyObservers()
+                    self.points2D.remove(point)
 
     # Track if the new point received correspond to a point already recorded (to follow the point)
     # Argument is the point data in an array outputed by "parse" function
