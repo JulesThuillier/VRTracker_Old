@@ -60,6 +60,7 @@ class Camera:
                 self.point2DdeletedNotifier.notifyObservers()
 
 
+
     # Track if the new point received correspond to a point already recorded (to follow the point)
     # Argument is the point data in an array outputed by "parse" function
     def addPoint(self, x, y, height, width):
