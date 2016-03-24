@@ -100,7 +100,7 @@ class Point3D:
             self.outer = outer
         def update(self, observable, arg):
             if len(self.outer.points2D) >1:
-
+                print "COUNT : " + str(len(self.outer.points2D))
              # elif len(self.outer.points2D) > 2:
                 list3DPositions = np.array([], dtype=np.float32).reshape(0,3)
 
