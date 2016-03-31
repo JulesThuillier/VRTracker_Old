@@ -12,13 +12,13 @@ class Point2D:
 
     camera = ""
 
-    MAX_FRAME_LOST_BEFORE_DELETE = 25
+    MAX_FRAME_LOST_BEFORE_DELETE = 15
 
     lastUpdateCounter = 0 # This counter is incremented every time his Camera receives a frame, either this point is not in the frame
     timeLastUpdated = 0
 
     def __init__(self, x, y, height, width, camera):
-        self.MAX_DELAY_MS = 500000
+        self.MAX_DELAY_MS = 100000
         self.lastUpdateTime = datetime.now()
         self.pointLost = False
         self.point3Dassigned = None
