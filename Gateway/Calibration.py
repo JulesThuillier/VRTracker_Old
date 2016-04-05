@@ -48,6 +48,16 @@ class Calibration:
             self.tag.setIRoff()
             self.tag.setRGBoff()
 
+        elif message == "on":
+            self.tag.setIRon()
+            self.tag.setRGB(1023,0,0)
+            self.server.send_message(self.client, "Tag turned ON")
+
+        elif message == "off":
+            self.tag.setIRoff()
+            self.tag.setCalibrationMode()
+            self.server.send_message(self.client, "Tag turned OFF")
+
         else:
             extracted_data = parse("calib:{}-{}-{}", message)
             if extracted_data != None and len(extracted_data.fixed) == 3:
