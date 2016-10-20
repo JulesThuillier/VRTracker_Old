@@ -88,7 +88,7 @@ void setup() {
     Serial.println("Gateway IP : " + strIP);
 
     // Check for software update
-    ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/camera1.bin");
+    ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/camera2.bin");
 
    
     // Start websocket client
@@ -96,7 +96,7 @@ void setup() {
       webSocket.begin(strIP, 8001);
     }
     else{
-      webSocket.begin("192.168.1.113", 8001);
+      webSocket.begin("192.168.2.12", 8001);
     }
     
     webSocket.onEvent(webSocketEvent);  
@@ -107,7 +107,6 @@ void loop() {
   webSocket.loop();
   old_blocks = blocks;
   blocks = pixy.getBlocks();
-
   if (blocks && (old_blocks != blocks))
   { 
       for (int j=0; j<blocks; j++)
@@ -132,7 +131,7 @@ void loop() {
           data += 'a';
           sprintf(extract, "%d", pixy.blocks[j].angle);
           data += extract;
-        //  Serial.println(data);
+      //    Serial.println(data);
           webSocket.sendTXT(data);
         }
       }   

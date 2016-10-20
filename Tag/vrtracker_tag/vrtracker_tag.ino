@@ -161,7 +161,7 @@ void setup() {
     Serial.println("Gateway IP : " + strIP);
 
     // Check for software update
-    ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/tag.bin");
+    ESPhttpUpdate.update("http://www.julesthuillier.com/vrtracker/arduino/tag1.bin");
 
    
     // Start websocket client
@@ -169,7 +169,7 @@ void setup() {
       webSocket.begin(strIP, 8001);
     }
     else{
-      webSocket.begin("192.168.1.113", 8001);
+      webSocket.begin("192.168.2.12", 8001);
     }
     
     webSocket.onEvent(webSocketEvent);  

@@ -2,14 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="702ee776-78a7-4b10-888b-9d2b93f714f5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Temp/ProcessJobs/e9a6970f79cd12d8b075e7d72f1b07cb.bakert" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Temp/UnityLockfile" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/AssetServerCacheV3" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/AssetServerCacheV3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/EditorUserBuildSettings.asset" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/EditorUserBuildSettings.asset" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/InspectorExpandedItems.asset" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/InspectorExpandedItems.asset" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/ScriptMapper" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/ScriptMapper" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/metadata/00/0000000000000000b000000000000000" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/metadata/00/0000000000000000b000000000000000" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/ProjectSettings/EditorBuildSettings.asset" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/ProjectSettings/EditorBuildSettings.asset" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/ProjectSettings/ProjectSettings.asset" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/ProjectSettings/ProjectSettings.asset" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Camera/ESP8266/vrtracker_websocket/vrtracker_websocket.ino" afterPath="$PROJECT_DIR$/../Camera/ESP8266/vrtracker_websocket/vrtracker_websocket.ino" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Point2D.py" afterPath="$PROJECT_DIR$/Point2D.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/calibration web interface/index.html" afterPath="$PROJECT_DIR$/calibration web interface/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vrtracker.py" afterPath="$PROJECT_DIR$/vrtracker.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Tag/vrtracker_tag/vrtracker_tag.ino" afterPath="$PROJECT_DIR$/../Tag/vrtracker_tag/vrtracker_tag.ino" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Unity/VR Tracker/Library/AssetImportState" afterPath="$PROJECT_DIR$/../Unity/VR Tracker/Library/AssetImportState" />
     </list>
     <ignored path="Gateway.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,10 +34,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="vrtracker.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="vrtracker.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vrtracker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14354067">
+            <state vertical-scroll-proportion="0.0">
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
@@ -44,19 +48,9 @@
         <entry file="file://$PROJECT_DIR$/websocketserver.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="37" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Camera.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="30" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+              <caret line="72" column="52" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="52" />
               <folding>
-                <element signature="e#22#40#0" expanded="true" />
+                <element signature="e#22#66#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,11 +68,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SocketServer.py" pinned="false" current-in-tab="false">
-        <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/SocketServer.py">
+      <file leaf-file-name="compute.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/compute.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.20763358">
+              <caret line="23" column="47" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="654" column="0" selection-start-line="654" selection-start-column="0" selection-end-line="654" selection-end-column="0" />
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -88,17 +92,7 @@
         <entry file="file://$PROJECT_DIR$/Tag.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/User.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <caret line="47" column="26" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -118,9 +112,21 @@
         <entry file="file://$PROJECT_DIR$/Calibration.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+              <caret line="27" column="12" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="12" />
               <folding>
                 <element signature="e#22#57#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="myseat_gateway.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../MySeat/RND/Passerelle/Linkit Smart Duo/Linkit_Gateway/myseat_gateway.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+              <folding>
+                <element signature="e#19#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,7 +136,7 @@
         <entry file="file://$PROJECT_DIR$/utils/Observer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <caret line="40" column="22" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -142,6 +148,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Setup Script" />
       </list>
     </option>
   </component>
@@ -177,10 +184,10 @@
         <option value="$PROJECT_DIR$/User.py" />
         <option value="$PROJECT_DIR$/Tag.py" />
         <option value="$PROJECT_DIR$/Camera.py" />
-        <option value="$PROJECT_DIR$/Calibration.py" />
         <option value="$PROJECT_DIR$/Point3D.py" />
         <option value="$PROJECT_DIR$/Point2D.py" />
         <option value="$PROJECT_DIR$/vrtracker.py" />
+        <option value="$PROJECT_DIR$/Calibration.py" />
       </list>
     </option>
   </component>
@@ -215,12 +222,17 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Gateway" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -249,12 +261,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../MySeat/RND/Passerelle/Linkit Smart Duo/Linkit_Gateway/myseat_gateway.py" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -461,25 +473,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15409055" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15409055" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34508076" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="0" y="103" width="1280" height="697" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32503662" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3440703" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="0" y="103" width="1280" height="697" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32599118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -525,21 +537,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Point3D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="50" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="59" />
-          <folding>
-            <element signature="e#22#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/User.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -555,7 +556,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#22#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -563,9 +566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#22#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -591,7 +591,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="67" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-          <folding />
+          <folding>
+            <element signature="e#22#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -599,9 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#22#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -609,7 +608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="55" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -660,7 +658,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="67" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-          <folding />
+          <folding>
+            <element signature="e#22#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -668,9 +668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#22#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -678,7 +675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="55" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -694,7 +690,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="67" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-          <folding />
+          <folding>
+            <element signature="e#22#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -702,9 +700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#22#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -712,7 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="55" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,13 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Python/2.7/site-packages/websocket_server/websocket_server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.72321427">
@@ -856,20 +843,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/websocketserver.py">
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/SocketServer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="37" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
+          <caret line="654" column="0" selection-start-line="654" selection-start-column="0" selection-end-line="654" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/User.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vrtracker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Camera.py">
+    <entry file="file://$PROJECT_DIR$/websocketserver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="30" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+          <caret line="72" column="52" selection-start-line="72" selection-start-column="43" selection-end-line="72" selection-end-column="52" />
           <folding>
-            <element signature="e#22#40#0" expanded="true" />
+            <element signature="e#22#66#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -884,10 +885,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/SocketServer.py">
+    <entry file="file://$PROJECT_DIR$/compute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20763358">
+          <caret line="23" column="47" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="654" column="0" selection-start-line="654" selection-start-column="0" selection-end-line="654" selection-end-column="0" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -895,15 +904,7 @@
     <entry file="file://$PROJECT_DIR$/Tag.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/User.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <caret line="47" column="26" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -919,9 +920,19 @@
     <entry file="file://$PROJECT_DIR$/Calibration.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="12" />
           <folding>
             <element signature="e#22#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../MySeat/RND/Passerelle/Linkit Smart Duo/Linkit_Gateway/myseat_gateway.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding>
+            <element signature="e#19#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -929,15 +940,7 @@
     <entry file="file://$PROJECT_DIR$/utils/Observer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vrtracker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14354067">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <caret line="40" column="22" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="22" />
           <folding />
         </state>
       </provider>
